@@ -1,0 +1,2 @@
+# tasuku-core
+Аналог Jira 
