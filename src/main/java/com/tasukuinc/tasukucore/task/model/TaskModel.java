@@ -1,18 +1,17 @@
-package com.tasukuinc.tasukucore.domain;
+package com.tasukuinc.tasukucore.task.model;
 
+import com.tasukuinc.tasukucore.appuser.model.AppUserModel;
+import com.tasukuinc.tasukucore.binding.ProjectTaskModel;
+import com.tasukuinc.tasukucore.sprint.model.SprintModel;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
 @Entity
 @Table (name = "task")
 @Data
-public class Task {
-
+public class TaskModel {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	@Column (name = "task_id")
@@ -23,24 +22,22 @@ public class Task {
 
 	@ManyToOne (cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn (name = "reporter_id", referencedColumnName = "user_id")
-	private AppUser reporter;
+	private AppUserModel reporter;
 
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn (name = "assignee_id", referencedColumnName = "user_id")
-	private AppUser assignee;
+	private AppUserModel assignee;
 
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinColumn (name = "status_id", referencedColumnName = "status_id")
-	private Status status;
+	@Enumerated (value = EnumType.STRING)
+	private TaskStatus status;
 
 	@Column (name = "description")
 	private String description;
 
 	@ManyToOne (cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn (name = "sprint_id", referencedColumnName = "sprint_id")
-	private Sprint sprint;
+	private SprintModel sprint;
 
 	@OneToMany (mappedBy = "task")
-	private Set<ProjectTask> projectTasks;
-
+	private Set<ProjectTaskModel> projectTasks;
 }

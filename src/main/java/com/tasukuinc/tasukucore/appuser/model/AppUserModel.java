@@ -1,21 +1,16 @@
-package com.tasukuinc.tasukucore.domain;
+package com.tasukuinc.tasukucore.appuser.model;
 
+import com.tasukuinc.tasukucore.binding.ProjectUserRoleModel;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Data;
 
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table (name = "app_user")
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-public class AppUser {
-
+@Data
+public class AppUserModel {
 	@Id
 	@Column (name = "user_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,5 +26,5 @@ public class AppUser {
 	private String password;
 
 	@OneToMany(mappedBy = "user")
-	private Set<ProjectUserRole> projectUserRoleSet;
+	private Set<ProjectUserRoleModel> projectUserRoleSet;
 }
