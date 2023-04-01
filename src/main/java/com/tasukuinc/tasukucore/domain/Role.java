@@ -1,16 +1,17 @@
-package com.tasukuinc.tasukucore.model;
+package com.tasukuinc.tasukucore.domain;
 
-import com.tasukuinc.tasukucore.model.catalogue.UserRole;
+import com.tasukuinc.tasukucore.domain.catalogue.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "role")
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class Role {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -20,4 +21,7 @@ public class Role {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "role_name")
 	private UserRole userRole;
+
+	@OneToMany(mappedBy = "role")
+	private Set<ProjectUserRole> projectUserRoles;
 }

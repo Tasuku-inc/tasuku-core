@@ -1,4 +1,4 @@
-package com.tasukuinc.tasukucore.model;
+package com.tasukuinc.tasukucore.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,13 +7,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table (name = "user")
+@Table (name = "app_user")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class AppUser {
 
 	@Id
 	@Column (name = "user_id")
@@ -29,10 +30,6 @@ public class User {
 	@Column (name = "password")
 	private String password;
 
-	@ManyToMany (mappedBy = "users")
-	private List<Project> projects;
-
-	//TODO: что делать с Role (она разная в зависимости от проекта)
-	//мб сделать Map<Project, Role>. Аналогично в Project сделать Map<User, Role>
-
+	@OneToMany(mappedBy = "user")
+	private Set<ProjectUserRole> projectUserRoleSet;
 }

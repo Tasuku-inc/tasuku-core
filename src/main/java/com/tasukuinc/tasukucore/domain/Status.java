@@ -1,16 +1,15 @@
-package com.tasukuinc.tasukucore.model;
+package com.tasukuinc.tasukucore.domain;
 
-import com.tasukuinc.tasukucore.model.catalogue.TaskStatus;
+import com.tasukuinc.tasukucore.domain.catalogue.TaskStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table (name = "status")
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class Status {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)

@@ -1,12 +1,14 @@
-package com.tasukuinc.tasukucore.model;
+package com.tasukuinc.tasukucore.domain;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table (name = "proj")
-
+@Data
 public class Project {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -18,15 +20,14 @@ public class Project {
 
 	@ManyToOne (cascade = CascadeType.ALL)
 	@JoinColumn (name = "head_id", referencedColumnName = "user_id")
-	private User headUser;
+	private AppUser headUser;
 
 	@Column (name = "is_closed")
 	private boolean isClosed;
 
-	@ManyToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinTable (name = "proj_user_role",
-			joinColumns = @JoinColumn(name = "proj_id"),
-			inverseJoinColumns = @JoinColumn(name = "user_id"))
-	private List<User> users;
+	@OneToMany(mappedBy = "project")
+	private Set<ProjectUserRole> projectUserRoles;
 
+	@OneToMany(mappedBy = "project")
+	private Set<ProjectTask> projectTasks;
 }

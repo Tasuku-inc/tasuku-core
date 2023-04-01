@@ -1,10 +1,13 @@
-package com.tasukuinc.tasukucore.model;
+package com.tasukuinc.tasukucore.domain;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.sql.Date;
 
 @Entity
 @Table (name = "sprint")
+@Data
 public class Sprint {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
