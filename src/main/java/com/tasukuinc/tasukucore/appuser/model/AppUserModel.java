@@ -15,16 +15,12 @@ public class AppUserModel {
 	@Column (name = "user_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@Column (name = "user_name")
+	@Column
 	private String username;
-
-	@Column (name = "email")
+	@Column
 	private String email;
-
-	@Column (name = "password")
+	@Column
 	private String password;
-
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<ProjectUserRoleModel> projectUserRoleSet;
 }

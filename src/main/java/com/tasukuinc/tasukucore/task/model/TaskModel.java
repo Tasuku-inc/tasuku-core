@@ -1,11 +1,12 @@
 package com.tasukuinc.tasukucore.task.model;
 
 import com.tasukuinc.tasukucore.appuser.model.AppUserModel;
-import com.tasukuinc.tasukucore.binding.ProjectTaskModel;
+import com.tasukuinc.tasukucore.project.model.ProjectModel;
 import com.tasukuinc.tasukucore.sprint.model.SprintModel;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,28 +17,18 @@ public class TaskModel {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	@Column (name = "task_id")
 	private Long id;
-
-	@Column (name = "name")
+	@Column
 	private String name;
-
-	@ManyToOne (cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinColumn (name = "reporter_id", referencedColumnName = "user_id")
+	@ManyToOne
 	private AppUserModel reporter;
-
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinColumn (name = "assignee_id", referencedColumnName = "user_id")
+	@ManyToOne
 	private AppUserModel assignee;
-
 	@Enumerated (value = EnumType.STRING)
 	private TaskStatus status;
-
-	@Column (name = "description")
+	@Column
 	private String description;
-
-	@ManyToOne (cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinColumn (name = "sprint_id", referencedColumnName = "sprint_id")
+	@ManyToOne
 	private SprintModel sprint;
-
-	@OneToMany (mappedBy = "task")
-	private Set<ProjectTaskModel> projectTasks;
+	@ManyToOne
+	private ProjectModel project;
 }

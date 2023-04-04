@@ -15,11 +15,10 @@ public class ProjectUserRoleModel {
 	@ManyToOne
 	@Id
 	private ProjectModel project;
-
 	@ManyToOne
 	@Id
 	private AppUserModel user;
-
+	@Column
 	@Enumerated (EnumType.STRING)
 	private UserRole userRole;
 }
