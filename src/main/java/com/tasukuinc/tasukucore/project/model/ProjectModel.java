@@ -6,7 +6,6 @@ import com.tasukuinc.tasukucore.sprint.model.SprintModel;
 import com.tasukuinc.tasukucore.task.model.TaskModel;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.annotations.Cascade;
 
 import java.util.Set;
 
