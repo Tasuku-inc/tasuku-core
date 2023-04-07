@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Date;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table (name = "sprint")
@@ -23,5 +23,5 @@ public class SprintModel {
 	@ManyToOne
 	private ProjectModel project;
 	@OneToMany(mappedBy = "sprint", cascade = CascadeType.ALL)
-	private Set<TaskModel> tasks;
+	private List<TaskModel> tasks;
 }

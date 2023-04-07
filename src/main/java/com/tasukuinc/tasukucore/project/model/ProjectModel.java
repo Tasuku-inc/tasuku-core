@@ -7,6 +7,8 @@ import com.tasukuinc.tasukucore.task.model.TaskModel;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -24,9 +26,9 @@ public class ProjectModel {
 	@Column
 	private boolean closed;
 	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
-	private Set<ProjectUserRoleModel> projectUserRoles;
+	private List<ProjectUserRoleModel> projectUserRoles;
 	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
-	private Set<TaskModel> taskModels;
+	private List<TaskModel> taskModels;
 	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
-	private Set<SprintModel> sprints;
+	private List<SprintModel> sprints;
 }
