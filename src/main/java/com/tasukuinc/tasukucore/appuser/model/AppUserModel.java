@@ -4,16 +4,19 @@ import com.tasukuinc.tasukucore.binding.ProjectUserRoleModel;
 import jakarta.persistence.*;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity
-@Table (name = "app_user")
+@Table(name = "app_user")
 @Data
+@EqualsAndHashCode
+@ToString
 public class AppUserModel {
 	@Id
-	@Column (name = "user_id")
+	@Column(name = "user_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column
@@ -22,8 +25,10 @@ public class AppUserModel {
 	private String email;
 	@Column
 	private String password;
-	@Enumerated (EnumType.STRING)
+	@Enumerated(EnumType.STRING)
 	private SystemRole systemRole;
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private Set<ProjectUserRoleModel> projectUserRoleSet;
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<ProjectUserRoleModel> projectUserRoles;
 }
