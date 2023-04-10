@@ -25,7 +25,9 @@ public class TaskModel {
 	@Column
 	private String description;
 	@ManyToOne
+	@JoinColumn (name = "sprint_id")
 	private SprintModel sprint;
 	@ManyToOne
+	@JoinColumn (name = "project_id")
 	private ProjectModel project;
 }

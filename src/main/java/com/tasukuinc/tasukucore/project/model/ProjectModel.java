@@ -24,12 +24,13 @@ public class ProjectModel {
 	@Column
 	private String name;
 	@ManyToOne
+	@JoinColumn(name = "head_user_id")
 	private AppUserModel headUser;
 	@Column
 	private boolean closed;
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
-	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "pk.project", cascade = CascadeType.ALL)
 	private List<ProjectUserRoleModel> projectUserRoles;
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude

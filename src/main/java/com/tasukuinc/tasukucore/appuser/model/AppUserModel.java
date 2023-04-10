@@ -29,6 +29,6 @@ public class AppUserModel {
 	private SystemRole systemRole;
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "pk.user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ProjectUserRoleModel> projectUserRoles;
 }

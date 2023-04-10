@@ -12,12 +12,9 @@ import javax.management.relation.Role;
 @Data
 @Table(name = "project_user_role")
 public class ProjectUserRoleModel {
-	@ManyToOne
-	@Id
-	private ProjectModel project;
-	@ManyToOne
-	@Id
-	private AppUserModel user;
+	@EmbeddedId
+	private ProjectUserRolePk pk;
+
 	@Column
 	@Enumerated (EnumType.STRING)
 	private UserRole userRole;

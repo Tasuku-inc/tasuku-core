@@ -11,20 +11,21 @@ import java.sql.Date;
 import java.util.List;
 
 @Entity
-@Table (name = "sprint")
+@Table(name = "sprint")
 @Data
 @EqualsAndHashCode
 @ToString
 public class SprintModel {
 	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	@Column (name = "sprint_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "sprint_id")
 	private long id;
 	@Column
 	private Date fromDate;
 	@Column
 	private Date toDate;
 	@ManyToOne
+	@JoinColumn(name = "project_id")
 	private ProjectModel project;
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
