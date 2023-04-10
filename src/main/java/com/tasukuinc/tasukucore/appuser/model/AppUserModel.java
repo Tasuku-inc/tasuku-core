@@ -4,13 +4,16 @@ import com.tasukuinc.tasukucore.binding.ProjectUserRoleModel;
 import jakarta.persistence.*;
 
 import lombok.Data;
-import org.hibernate.mapping.Set;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.List;
 
 @Entity
 @Table(name = "app_user")
 @Data
+@EqualsAndHashCode
+@ToString
 public class AppUserModel {
 	@Id
 	@Column(name = "user_id")
@@ -24,6 +27,8 @@ public class AppUserModel {
 	private String password;
 	@Enumerated(EnumType.STRING)
 	private SystemRole systemRole;
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ProjectUserRoleModel> projectUserRoles;
 }

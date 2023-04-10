@@ -6,14 +6,16 @@ import com.tasukuinc.tasukucore.sprint.model.SprintModel;
 import com.tasukuinc.tasukucore.task.model.TaskModel;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table (name = "project")
 @Data
+@EqualsAndHashCode
+@ToString
 public class ProjectModel {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -25,10 +27,16 @@ public class ProjectModel {
 	private AppUserModel headUser;
 	@Column
 	private boolean closed;
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
 	private List<ProjectUserRoleModel> projectUserRoles;
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
 	private List<TaskModel> taskModels;
-	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
+	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<SprintModel> sprints;
 }

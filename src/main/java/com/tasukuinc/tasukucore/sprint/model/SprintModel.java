@@ -4,6 +4,8 @@ import com.tasukuinc.tasukucore.project.model.ProjectModel;
 import com.tasukuinc.tasukucore.task.model.TaskModel;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.sql.Date;
 import java.util.List;
@@ -11,6 +13,8 @@ import java.util.List;
 @Entity
 @Table (name = "sprint")
 @Data
+@EqualsAndHashCode
+@ToString
 public class SprintModel {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -22,6 +26,8 @@ public class SprintModel {
 	private Date toDate;
 	@ManyToOne
 	private ProjectModel project;
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	@OneToMany(mappedBy = "sprint", cascade = CascadeType.ALL)
 	private List<TaskModel> tasks;
 }
