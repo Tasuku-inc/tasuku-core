@@ -19,22 +19,23 @@ import ru.mephi.tasuku.project.service.ProjectService;
 public class ProjectController {
 
     private final ProjectService projectService;
+    private final ProjectDtoMapper mapper;
 
     @GetMapping("/{projectId}")
     public ProjectResponse getProject(@PathVariable long projectId) {
-        return ProjectDtoMapper.objectToDto(projectService.getById(projectId));
+        return mapper.objectToDto(projectService.getById(projectId));
     }
 
     @GetMapping
     public List<ProjectResponse> getAllProjects() {
         return projectService.getAll().stream()
-                .map(ProjectDtoMapper::objectToDto)
+                .map(mapper::objectToDto)
                 .toList();
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public long createProject(@RequestBody ProjectResponse projectResponse) {
-        return projectService.createProject(ProjectDtoMapper.dtoToObject(projectResponse));
+        return projectService.createProject(mapper.dtoToObject(projectResponse));
     }
 
     @DeleteMapping("/delete/{projectId}")

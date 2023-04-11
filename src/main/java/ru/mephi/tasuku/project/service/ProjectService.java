@@ -14,22 +14,23 @@ import ru.mephi.tasuku.project.service.object.Project;
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
+    private final ProjectModelMapper mapper;
 
     public Project getById(long id) {
         ProjectModel model = projectRepository.findById(id)
                 .orElseThrow(() -> new ProjectNotFoundException(id));
-        return ProjectModelMapper.modelToObject(model);
+        return mapper.modelToObject(model);
     }
 
     public List<Project> getAll() {
         return projectRepository.findAll().stream()
-                .map(ProjectModelMapper::modelToObject)
+                .map(mapper::modelToObject)
                 .toList();
     }
 
     @Transactional
     public long createProject(Project project) {
-        ProjectModel model = ProjectModelMapper.objectToModel(project);
+        ProjectModel model = mapper.objectToModel(project);
         return projectRepository.save(model).getId();
     }
 
