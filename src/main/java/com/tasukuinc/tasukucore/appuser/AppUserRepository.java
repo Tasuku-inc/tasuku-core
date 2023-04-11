@@ -1,12 +1,10 @@
 package com.tasukuinc.tasukucore.appuser;
 
 import com.tasukuinc.tasukucore.appuser.model.AppUserModel;
-import com.tasukuinc.tasukucore.project.model.ProjectModel;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
 import java.util.Optional;
 
-public interface AppUserRepository extends CrudRepository<AppUserModel, Long> {
+public interface AppUserRepository extends JpaRepository<AppUserModel, Long> {
 	Optional<AppUserModel> findByUsername(String username);
 }

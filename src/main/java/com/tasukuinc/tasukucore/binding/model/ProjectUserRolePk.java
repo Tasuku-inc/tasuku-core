@@ -1,4 +1,4 @@
-package com.tasukuinc.tasukucore.binding;
+package com.tasukuinc.tasukucore.binding.model;
 
 import com.tasukuinc.tasukucore.appuser.model.AppUserModel;
 import com.tasukuinc.tasukucore.project.model.ProjectModel;

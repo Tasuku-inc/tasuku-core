@@ -1,7 +1,7 @@
 package com.tasukuinc.tasukucore.project.model;
 
 import com.tasukuinc.tasukucore.appuser.model.AppUserModel;
-import com.tasukuinc.tasukucore.binding.ProjectUserRoleModel;
+import com.tasukuinc.tasukucore.binding.model.ProjectUserRoleModel;
 import com.tasukuinc.tasukucore.sprint.model.SprintModel;
 import com.tasukuinc.tasukucore.task.model.TaskModel;
 import jakarta.persistence.*;

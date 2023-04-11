@@ -13,7 +13,7 @@ public class TaskModel {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	@Column (name = "task_id")
-	private Long id;
+	private long id;
 	@Column
 	private String name;
 	@ManyToOne

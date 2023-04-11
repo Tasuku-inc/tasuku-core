@@ -1,7 +1,7 @@
 package com.tasukuinc.tasukucore.task;
 
 import com.tasukuinc.tasukucore.task.model.TaskModel;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TaskRepository extends CrudRepository<TaskModel, Long> {
+public interface TaskRepository extends JpaRepository<TaskModel, Long> {
 }
