@@ -1,7 +1,7 @@
-package ru.mephi.tasuku.sprint.object;
+package ru.mephi.tasuku.sprint.service.object;
 
 import ru.mephi.tasuku.project.service.object.Project;
-import ru.mephi.tasuku.task.object.Task;
+import ru.mephi.tasuku.task.service.object.Task;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;

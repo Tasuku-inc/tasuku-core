@@ -1,4 +1,4 @@
-package ru.mephi.tasuku.project.service;
+package ru.mephi.tasuku.project.service.exception;
 
 import org.springframework.http.HttpStatus;
 import ru.mephi.tasuku.project.service.exception.ErrorMessage;

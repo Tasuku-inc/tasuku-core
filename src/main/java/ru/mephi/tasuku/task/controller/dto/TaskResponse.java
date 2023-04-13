@@ -1,4 +1,4 @@
-package ru.mephi.tasuku.task.dto;
+package ru.mephi.tasuku.task.controller.dto;
 
 import lombok.Builder;
 import lombok.Data;

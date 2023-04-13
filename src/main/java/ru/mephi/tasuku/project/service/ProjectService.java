@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.mephi.tasuku.project.repository.ProjectRepository;
 import ru.mephi.tasuku.project.repository.model.ProjectModel;
+import ru.mephi.tasuku.project.service.exception.ProjectNotFoundException;
 import ru.mephi.tasuku.project.service.object.Project;
 
 @Service

@@ -7,7 +7,7 @@ import lombok.Data;
 import ru.mephi.tasuku.appuser.dto.AppUserResponse;
 import ru.mephi.tasuku.binding.dto.ProjectUserRoleResponse;
 import ru.mephi.tasuku.sprint.dto.SprintResponse;
-import ru.mephi.tasuku.task.dto.TaskResponse;
+import ru.mephi.tasuku.task.controller.dto.TaskResponse;
 
 @Data
 @Builder

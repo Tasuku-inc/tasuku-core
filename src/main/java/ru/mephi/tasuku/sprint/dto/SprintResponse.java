@@ -1,7 +1,7 @@
 package ru.mephi.tasuku.sprint.dto;
 
 import ru.mephi.tasuku.project.controller.dto.ProjectResponse;
-import ru.mephi.tasuku.task.dto.TaskResponse;
+import ru.mephi.tasuku.task.controller.dto.TaskResponse;
 import lombok.Builder;
 import lombok.Data;
 
