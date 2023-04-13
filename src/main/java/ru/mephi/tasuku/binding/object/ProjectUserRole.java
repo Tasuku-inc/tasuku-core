@@ -1,6 +1,6 @@
 package ru.mephi.tasuku.binding.object;
 
-import ru.mephi.tasuku.appuser.model.UserRole;
+import ru.mephi.tasuku.appuser.repository.model.UserRole;
 import ru.mephi.tasuku.appuser.object.AppUser;
 import lombok.Builder;
 import lombok.Data;

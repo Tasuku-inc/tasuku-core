@@ -1,8 +1,8 @@
-package ru.mephi.tasuku.task.model;
+package ru.mephi.tasuku.task.repository.model;
 
-import ru.mephi.tasuku.appuser.model.AppUserModel;
+import ru.mephi.tasuku.appuser.repository.model.AppUserModel;
 import ru.mephi.tasuku.project.repository.model.ProjectModel;
-import ru.mephi.tasuku.sprint.model.SprintModel;
+import ru.mephi.tasuku.sprint.repository.model.SprintModel;
 import jakarta.persistence.*;
 import lombok.Data;
 

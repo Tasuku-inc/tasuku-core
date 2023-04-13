@@ -1,4 +1,4 @@
-package ru.mephi.tasuku.task.model;
+package ru.mephi.tasuku.task.repository.model;
 
 public enum TaskStatus {
 	OPENED,

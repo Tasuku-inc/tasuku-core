@@ -1,8 +1,8 @@
-package ru.mephi.tasuku.binding.model;
+package ru.mephi.tasuku.binding.repository.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import ru.mephi.tasuku.appuser.model.UserRole;
+import ru.mephi.tasuku.appuser.repository.model.UserRole;
 
 @Entity
 @Data

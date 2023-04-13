@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import ru.mephi.tasuku.appuser.dto.AppUserResponse;
 import ru.mephi.tasuku.project.controller.dto.ProjectResponse;
-import ru.mephi.tasuku.task.model.TaskStatus;
+import ru.mephi.tasuku.task.repository.model.TaskStatus;
 
 @Data
 @Builder

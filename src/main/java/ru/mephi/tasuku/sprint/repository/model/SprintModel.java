@@ -1,7 +1,7 @@
-package ru.mephi.tasuku.sprint.model;
+package ru.mephi.tasuku.sprint.repository.model;
 
 import ru.mephi.tasuku.project.repository.model.ProjectModel;
-import ru.mephi.tasuku.task.model.TaskModel;
+import ru.mephi.tasuku.task.repository.model.TaskModel;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,8 +13,12 @@ import java.util.List;
 @Entity
 @Table(name = "sprint")
 @Data
-@EqualsAndHashCode
-@ToString
+@EqualsAndHashCode(exclude = {
+		"tasks"
+})
+@ToString(exclude = {
+		"tasks"
+})
 public class SprintModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +31,6 @@ public class SprintModel {
 	@ManyToOne
 	@JoinColumn(name = "project_id")
 	private ProjectModel project;
-	@EqualsAndHashCode.Exclude
-	@ToString.Exclude
 	@OneToMany(mappedBy = "sprint", cascade = CascadeType.ALL)
 	private List<TaskModel> tasks;
 }

@@ -6,7 +6,7 @@ import ru.mephi.tasuku.sprint.object.Sprint;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
-import ru.mephi.tasuku.task.model.TaskStatus;
+import ru.mephi.tasuku.task.repository.model.TaskStatus;
 
 @Data
 @Builder

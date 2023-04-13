@@ -1,6 +1,6 @@
 package ru.mephi.tasuku.appuser.object;
 
-import ru.mephi.tasuku.appuser.model.SystemRole;
+import ru.mephi.tasuku.appuser.repository.model.SystemRole;
 import ru.mephi.tasuku.binding.object.ProjectUserRole;
 import ru.mephi.tasuku.task.object.Task;
 import lombok.Builder;
