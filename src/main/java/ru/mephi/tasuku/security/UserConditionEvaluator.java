@@ -10,7 +10,7 @@ import ru.mephi.tasuku.binding.repository.ProjectUserRoleRepository;
 public class UserConditionEvaluator {
 	private final ProjectUserRoleRepository projectUserRoleRepository;
 
-	public boolean userCanWriteToProject (long projectId) {
+	public boolean canWriteToProject (long projectId) {
 		SecurityUser user = (SecurityUser) SecurityContextHolder.getContext()
 				.getAuthentication()
 				.getPrincipal();
