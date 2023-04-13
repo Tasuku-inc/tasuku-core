@@ -1,10 +1,10 @@
-package ru.mephi.tasuku.binding;
+package ru.mephi.tasuku.binding.model;
 
 import ru.mephi.tasuku.appuser.model.AppUserModel;
-import ru.mephi.tasuku.project.repository.model.ProjectModel;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import ru.mephi.tasuku.project.repository.model.ProjectModel;
 
 import java.io.Serializable;
 

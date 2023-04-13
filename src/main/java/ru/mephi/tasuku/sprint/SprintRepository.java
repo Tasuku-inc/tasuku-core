@@ -1,7 +1,7 @@
 package ru.mephi.tasuku.sprint;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import ru.mephi.tasuku.sprint.model.SprintModel;
-import org.springframework.data.repository.CrudRepository;
 
-public interface SprintRepository extends CrudRepository<SprintModel, Long> {
+public interface SprintRepository extends JpaRepository<SprintModel, Long> {
 }

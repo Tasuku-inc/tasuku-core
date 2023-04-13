@@ -25,7 +25,7 @@ public class ProjectModelMapper {
                 //TODO пока что так
                 .headUser(null)
                 .projectUserRoles(List.of())
-                .taskModels(List.of())
+                .tasks(List.of())
                 .sprints(List.of())
 
                 .build();

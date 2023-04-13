@@ -6,13 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.mephi.tasuku.appuser.model.AppUserModel;
-import ru.mephi.tasuku.binding.ProjectUserRoleModel;
-import ru.mephi.tasuku.sprint.model.SprintModel;
-import ru.mephi.tasuku.task.model.TaskModel;
+import ru.mephi.tasuku.binding.model.ProjectUserRoleModel;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import ru.mephi.tasuku.sprint.model.SprintModel;
+import ru.mephi.tasuku.task.model.TaskModel;
 
 import java.util.List;
 
@@ -20,13 +19,17 @@ import java.util.List;
 @Table(name = "project")
 @Getter
 @Setter
-@EqualsAndHashCode
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@EqualsAndHashCode(exclude = {
+        "projectUserRoles",
+        "tasks",
+        "sprints"
+})
 @ToString(exclude = {
         "projectUserRoles",
-        "taskModels",
+        "tasks",
         "sprints"
 })
 public class ProjectModel {
@@ -41,13 +44,10 @@ public class ProjectModel {
     private AppUserModel headUser;
     @Column
     private boolean closed;
-    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "pk.project", cascade = CascadeType.ALL)
     private List<ProjectUserRoleModel> projectUserRoles;
-    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
-    private List<TaskModel> taskModels;
-    @EqualsAndHashCode.Exclude
+    private List<TaskModel> tasks;
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<SprintModel> sprints;
 }

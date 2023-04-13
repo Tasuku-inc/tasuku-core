@@ -1,7 +1,7 @@
 package ru.mephi.tasuku.task;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import ru.mephi.tasuku.task.model.TaskModel;
-import org.springframework.data.repository.CrudRepository;
 
-public interface TaskRepository extends CrudRepository<TaskModel, Long> {
+public interface TaskRepository extends JpaRepository<TaskModel, Long> {
 }
