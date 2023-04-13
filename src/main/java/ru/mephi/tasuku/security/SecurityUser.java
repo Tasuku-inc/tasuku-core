@@ -5,15 +5,16 @@ import lombok.Builder;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ru.mephi.tasuku.appuser.service.object.AppUser;
 
 import java.util.Collection;
 
 @Builder
 public class SecurityUser implements UserDetails {
 	@Getter
-	private final AppUserModel appUser;
+	private final AppUser appUser;
 
-	public SecurityUser(AppUserModel appUser) {
+	public SecurityUser(AppUser appUser) {
 		this.appUser = appUser;
 	}
 

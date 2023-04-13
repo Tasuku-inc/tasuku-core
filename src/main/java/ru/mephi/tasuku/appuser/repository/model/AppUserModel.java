@@ -1,5 +1,8 @@
 package ru.mephi.tasuku.appuser.repository.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import ru.mephi.tasuku.binding.repository.model.ProjectUserRoleModel;
 import jakarta.persistence.*;
 
@@ -13,6 +16,9 @@ import java.util.List;
 @Entity
 @Table(name = "app_user")
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(exclude = {
 		"projectUserRoles",
 		"reportingTasks",
