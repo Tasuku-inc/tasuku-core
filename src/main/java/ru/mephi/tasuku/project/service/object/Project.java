@@ -19,6 +19,6 @@ public class Project {
     private boolean closed;
     private AppUser headUser;
     private List<ProjectUserRole> projectUserRoles;
-    private List<Task> taskModels;
+    private List<Task> tasks;
     private List<Sprint> sprints;
 }

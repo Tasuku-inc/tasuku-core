@@ -9,10 +9,8 @@ import ru.mephi.tasuku.project.service.object.Project;
 
 @Data
 @Builder
-@ToString
 public class ProjectUserRole {
 	private Project project;
 	private AppUser user;
 	private UserRole userRole;
-
 }

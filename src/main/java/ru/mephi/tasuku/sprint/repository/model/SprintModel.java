@@ -1,24 +1,22 @@
 package ru.mephi.tasuku.sprint.repository.model;
 
+import lombok.*;
 import ru.mephi.tasuku.project.repository.model.ProjectModel;
 import ru.mephi.tasuku.task.repository.model.TaskModel;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 import java.sql.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "sprint")
-@Data
-@EqualsAndHashCode(exclude = {
-		"tasks"
-})
-@ToString(exclude = {
-		"tasks"
-})
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@EqualsAndHashCode(exclude = {"tasks"})
+@ToString(exclude = {"tasks"})
 public class SprintModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

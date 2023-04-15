@@ -1,12 +1,16 @@
 package ru.mephi.tasuku.binding.repository.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import ru.mephi.tasuku.appuser.repository.model.UserRole;
 
 @Entity
-@Data
 @Table(name = "project_user_role")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class ProjectUserRoleModel {
 	@EmbeddedId
 	private ProjectUserRolePk pk;

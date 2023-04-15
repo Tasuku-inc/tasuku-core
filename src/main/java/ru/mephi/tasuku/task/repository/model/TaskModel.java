@@ -1,14 +1,18 @@
 package ru.mephi.tasuku.task.repository.model;
 
+import lombok.*;
 import ru.mephi.tasuku.appuser.repository.model.AppUserModel;
 import ru.mephi.tasuku.project.repository.model.ProjectModel;
 import ru.mephi.tasuku.sprint.repository.model.SprintModel;
 import jakarta.persistence.*;
-import lombok.Data;
 
 @Entity
 @Table (name = "task")
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class TaskModel {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
