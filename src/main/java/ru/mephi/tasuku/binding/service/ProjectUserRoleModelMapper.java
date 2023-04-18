@@ -12,25 +12,20 @@ import ru.mephi.tasuku.project.service.ProjectModelMapper;
 
 @Component
 public class ProjectUserRoleModelMapper {
-	@Lazy
-	@Autowired
-	private ProjectModelMapper projectModelMapper;
-	@Lazy
-	@Autowired
-	private AppUserModelMapper appUserModelMapper;
-	public ProjectUserRole modelToObject(ProjectUserRoleModel model) {
+
+	public static ProjectUserRole modelToObject(ProjectUserRoleModel model) {
 		return ProjectUserRole.builder()
-				.project(projectModelMapper.modelToObject(model.getPk().getProject()))
-				.user(appUserModelMapper.modelToObject(model.getPk().getUser()))
+				.project(ProjectModelMapper.modelToObject(model.getPk().getProject()))
+				.user(AppUserModelMapper.modelToObject(model.getPk().getUser()))
 				.userRole(model.getUserRole())
 				.build();
 	}
 
-	public ProjectUserRoleModel objectToModel(ProjectUserRole object) {
+	public static ProjectUserRoleModel objectToModel(ProjectUserRole object) {
 		return ProjectUserRoleModel.builder()
 				.pk(ProjectUserRolePk.builder()
-						.user(appUserModelMapper.objectToModel(object.getUser()))
-						.project(projectModelMapper.objectToModel(object.getProject()))
+						.user(AppUserModelMapper.objectToModel(object.getUser()))
+						.project(ProjectModelMapper.objectToModel(object.getProject()))
 						.build())
 				.userRole(object.getUserRole())
 				.build();

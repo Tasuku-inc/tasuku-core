@@ -11,40 +11,30 @@ import ru.mephi.tasuku.task.repository.model.TaskModel;
 import ru.mephi.tasuku.task.service.object.Task;
 
 @Component
-@RequiredArgsConstructor
 public class TaskModelMapper {
-	@Lazy
-	@Autowired
-	private AppUserModelMapper appUserModelMapper;
 
-	@Lazy
-	@Autowired
-	private ProjectModelMapper projectModelMapper;
-	private final SprintModelMapper sprintModelMapper;
-
-	public Task modelToObject(TaskModel model) {
+	public static Task modelToObject(TaskModel model) {
 		return Task.builder()
 				.id(model.getId())
 				.name(model.getName())
-				.reporter(appUserModelMapper.modelToObject(model.getReporter()))
-				.assignee(appUserModelMapper.modelToObject(model.getAssignee()))
+				.reporter(AppUserModelMapper.modelToObject(model.getReporter()))
+				.assignee(AppUserModelMapper.modelToObject(model.getAssignee()))
 				.status(model.getStatus())
 				.description(model.getDescription())
-				.sprint(sprintModelMapper.modelToObject(model.getSprint()))
-				.project(projectModelMapper.modelToObject(model.getProject()))
+				.sprint(SprintModelMapper.modelToObject(model.getSprint()))
+				.project(ProjectModelMapper.modelToObject(model.getProject()))
 				.build();
 	}
 
-	public TaskModel objectToModel(Task object) {
+	public static TaskModel objectToModel(Task object) {
 		return TaskModel.builder()
 				.id(object.getId())
 				.name(object.getName())
-				.reporter(appUserModelMapper.objectToModel(object.getReporter()))
-				.assignee(appUserModelMapper.objectToModel(object.getReporter()))
+				.reporter(AppUserModelMapper.objectToModel(object.getReporter()))
+				.assignee(AppUserModelMapper.objectToModel(object.getReporter()))
 				.description(object.getDescription())
-				.sprint(sprintModelMapper.objectToModel(object.getSprint()))
-				.project(projectModelMapper.objectToModel(object.getProject()))
+				.sprint(SprintModelMapper.objectToModel(object.getSprint()))
+				.project(ProjectModelMapper.objectToModel(object.getProject()))
 				.build();
 	}
-
 }

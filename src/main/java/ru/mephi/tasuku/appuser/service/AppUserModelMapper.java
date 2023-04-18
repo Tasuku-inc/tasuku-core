@@ -17,56 +17,29 @@ import ru.mephi.tasuku.task.service.TaskModelMapper;
 @RequiredArgsConstructor
 public class AppUserModelMapper {
 
-    private final ProjectUserRoleModelMapper projectUserRoleModelMapper;
-    private final TaskModelMapper taskModelMapper;
-
-    public AppUser modelToObject(AppUserModel model) {
+    public static AppUser modelToObject(AppUserModel model) {
         return AppUser.builder()
                 .id(model.getId())
                 .username(model.getUsername())
                 .password(model.getPassword())
                 .email(model.getEmail())
                 .systemRole(model.getSystemRole())
-                .projectUserRoles(model
-                        .getProjectUserRoles()
-                        .stream()
-                        .map(projectUserRoleModelMapper::modelToObject)
-                        .collect(Collectors.toList()))
-                .assignedTasks(model
-                        .getAssignedTasks()
-                        .stream()
-                        .map(taskModelMapper::modelToObject)
-                        .collect(Collectors.toList()))
-                .reportingTasks(model
-                        .getReportingTasks()
-                        .stream()
-                        .map(taskModelMapper::modelToObject)
-                        .collect(Collectors.toList()))
+                .projectUserRoles(List.of())
+                .assignedTasks(List.of())
+                .reportingTasks(List.of())
                 .build();
     }
 
-    public AppUserModel objectToModel(AppUser object) {
+    public static AppUserModel objectToModel(AppUser object) {
         return AppUserModel.builder()
                 .id(object.getId())
                 .username(object.getUsername())
                 .password(object.getPassword())
                 .email(object.getEmail())
                 .systemRole(object.getSystemRole())
-                .projectUserRoles(object
-                        .getProjectUserRoles()
-                        .stream()
-                        .map(projectUserRoleModelMapper::objectToModel)
-                        .collect(Collectors.toList()))
-                .assignedTasks(object
-                        .getAssignedTasks()
-                        .stream()
-                        .map(taskModelMapper::objectToModel)
-                        .collect(Collectors.toList()))
-                .reportingTasks(object
-                        .getReportingTasks()
-                        .stream()
-                        .map(taskModelMapper::objectToModel)
-                        .collect(Collectors.toList()))
+                .projectUserRoles(List.of())
+                .assignedTasks(List.of())
+                .reportingTasks(List.of())
                 .build();
     }
 

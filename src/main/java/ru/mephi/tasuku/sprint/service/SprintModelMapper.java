@@ -9,40 +9,27 @@ import ru.mephi.tasuku.sprint.repository.model.SprintModel;
 import ru.mephi.tasuku.sprint.service.object.Sprint;
 import ru.mephi.tasuku.task.service.TaskModelMapper;
 
+import java.util.List;
 import java.util.stream.Collectors;
-
-@Component
 public class SprintModelMapper {
-	@Lazy
-	@Autowired
-	private ProjectModelMapper projectModelMapper;
-	@Lazy
-	@Autowired
-	private TaskModelMapper taskModelMapper;
 
-	public Sprint modelToObject(SprintModel model) {
+	public static Sprint modelToObject(SprintModel model) {
 		return Sprint.builder()
 				.id(model.getId())
 				.fromDate(model.getFromDate())
 				.toDate(model.getToDate())
-				.project(projectModelMapper.modelToObject(model.getProject()))
-				.tasks(model.getTasks()
-						.stream()
-						.map(taskModelMapper::modelToObject)
-						.collect(Collectors.toList()))
+				.project(ProjectModelMapper.modelToObject(model.getProject()))
+				.tasks(List.of())
 				.build();
 	}
 
-	public SprintModel objectToModel(Sprint object) {
+	public static SprintModel objectToModel(Sprint object) {
 		return SprintModel.builder()
 				.id(object.getId())
 				.fromDate(object.getFromDate())
 				.toDate(object.getToDate())
-				.project(projectModelMapper.objectToModel(object.getProject()))
-				.tasks(object.getTasks()
-						.stream()
-						.map(taskModelMapper::objectToModel)
-						.collect(Collectors.toList()))
+				.project(ProjectModelMapper.objectToModel(object.getProject()))
+				.tasks(List.of())
 				.build();
 	}
 }
