@@ -5,13 +5,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.mephi.tasuku.appuser.model.AppUserModel;
-import ru.mephi.tasuku.binding.model.ProjectUserRoleModel;
+import ru.mephi.tasuku.appuser.repository.model.AppUserModel;
+import ru.mephi.tasuku.binding.repository.model.ProjectUserRoleModel;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import ru.mephi.tasuku.sprint.model.SprintModel;
-import ru.mephi.tasuku.task.model.TaskModel;
+import ru.mephi.tasuku.sprint.repository.model.SprintModel;
+import ru.mephi.tasuku.task.repository.model.TaskModel;
 
 import java.util.List;
 
