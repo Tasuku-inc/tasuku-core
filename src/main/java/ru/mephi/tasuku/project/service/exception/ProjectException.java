@@ -5,7 +5,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 public abstract class ProjectException extends ResponseStatusException {
 
-    protected ProjectException(HttpStatus status, ErrorMessage formatError, String id) {
-        super(status, String.format(formatError.getMessage(), id));
+    protected ProjectException(HttpStatus status, ProjectErrorMessage formatError, String param) {
+        super(status, String.format(formatError.getMessage(), param));
     }
 }

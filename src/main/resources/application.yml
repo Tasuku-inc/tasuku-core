@@ -1,6 +1,8 @@
 server:
   servlet:
     context-path: /api
+  error:
+      include-message: always
 
 spring:
   datasource:

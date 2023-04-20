@@ -6,5 +6,5 @@ import ru.mephi.tasuku.appuser.repository.model.AppUserModel;
 @Data
 public class ProjectRequest {
     private String name;
-    private AppUserModel headUser;
+    private Long headUserId;
 }

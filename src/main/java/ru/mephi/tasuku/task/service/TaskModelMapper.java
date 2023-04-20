@@ -14,27 +14,36 @@ import ru.mephi.tasuku.task.service.object.Task;
 public class TaskModelMapper {
 
 	public static Task modelToObject(TaskModel model) {
-		return Task.builder()
+		var object = Task.builder()
 				.id(model.getId())
 				.name(model.getName())
 				.reporter(AppUserModelMapper.modelToObject(model.getReporter()))
 				.assignee(AppUserModelMapper.modelToObject(model.getAssignee()))
 				.status(model.getStatus())
 				.description(model.getDescription())
-				.sprint(SprintModelMapper.modelToObject(model.getSprint()))
-				.project(ProjectModelMapper.modelToObject(model.getProject()))
-				.build();
+				.project(ProjectModelMapper.modelToObject(model.getProject()));
+
+		if (model.getSprint() != null) {
+			object.sprint(SprintModelMapper.modelToObject(model.getSprint()));
+		}
+
+		return object.build();
 	}
 
 	public static TaskModel objectToModel(Task object) {
-		return TaskModel.builder()
+		var model = TaskModel.builder()
 				.id(object.getId())
 				.name(object.getName())
 				.reporter(AppUserModelMapper.objectToModel(object.getReporter()))
-				.assignee(AppUserModelMapper.objectToModel(object.getReporter()))
+				.assignee(AppUserModelMapper.objectToModel(object.getAssignee()))
+				.status(object.getStatus())
 				.description(object.getDescription())
-				.sprint(SprintModelMapper.objectToModel(object.getSprint()))
-				.project(ProjectModelMapper.objectToModel(object.getProject()))
-				.build();
+				.project(ProjectModelMapper.objectToModel(object.getProject()));
+
+		if (object.getSprint() != null) {
+			model.sprint(SprintModelMapper.objectToModel(object.getSprint()));
+		}
+
+		return model.build();
 	}
 }

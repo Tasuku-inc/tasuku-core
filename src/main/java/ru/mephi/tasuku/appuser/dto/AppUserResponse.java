@@ -14,8 +14,4 @@ public class AppUserResponse {
 	private long id;
 	private String username;
 	private String email;
-	private SystemRole systemRole;
-	private List<ProjectUserRoleResponse> projectUserRoles;
-	private List<TaskResponse> reportingTasks;
-	private List<TaskResponse> assignedTasks;
 }

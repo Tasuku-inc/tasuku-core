@@ -12,11 +12,8 @@ import ru.mephi.tasuku.task.controller.dto.TaskResponse;
 @Data
 @Builder
 public class ProjectResponse {
-    private long id;
+    private Long id;
     private String name;
     private boolean closed;
-    private AppUserResponse headUser;
-    private List<ProjectUserRoleResponse> projectUserRoles;
-    private List<TaskResponse> taskModels;
-    private List<SprintResponse> sprints;
+    private String headUsername;
 }
