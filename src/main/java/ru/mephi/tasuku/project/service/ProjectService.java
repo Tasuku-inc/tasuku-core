@@ -9,12 +9,17 @@ import ru.mephi.tasuku.project.repository.ProjectRepository;
 import ru.mephi.tasuku.project.repository.model.ProjectModel;
 import ru.mephi.tasuku.project.service.exception.ProjectIdNotFoundException;
 import ru.mephi.tasuku.project.service.object.Project;
+import ru.mephi.tasuku.task.controller.dto.TaskDtoMapper;
+import ru.mephi.tasuku.task.controller.dto.TaskResponse;
+import ru.mephi.tasuku.task.service.TaskService;
+import ru.mephi.tasuku.task.service.object.Task;
 
 @Service
 @RequiredArgsConstructor
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
+    private final TaskService taskService;
 
     public Project getById(long id) {
         ProjectModel model = projectRepository.findById(id)
@@ -26,6 +31,10 @@ public class ProjectService {
         return projectRepository.findAll().stream()
                 .map(ProjectModelMapper::modelToObject)
                 .toList();
+    }
+
+    public List<Task> getTasks(long projectId) {
+        return taskService.findAllInProject(projectId);
     }
 
     @Transactional

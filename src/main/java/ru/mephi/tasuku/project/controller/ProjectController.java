@@ -16,7 +16,6 @@ import ru.mephi.tasuku.task.service.TaskService;
 @RequiredArgsConstructor
 public class ProjectController {
     private final ProjectService projectService;
-    private final TaskService taskService;
     private final ProjectDtoMapper projectDtoMapper;
 
     @GetMapping("/{projectId}")
@@ -43,9 +42,7 @@ public class ProjectController {
 
     @GetMapping("/{projectId}/tasks")
     public List<TaskResponse> findAllProjectTasks(@PathVariable long projectId) {
-        return taskService.findAllInProject(projectId).stream()
-                .map(TaskDtoMapper::objectToDto)
-                .toList();
+        return projectService.getTasks(projectId)
+                .stream().map(TaskDtoMapper::objectToDto).toList();
     }
-
 }
