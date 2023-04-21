@@ -9,7 +9,7 @@ import ru.mephi.tasuku.security.SecurityUser;
 import ru.mephi.tasuku.task.repository.TaskRepository;
 import ru.mephi.tasuku.task.repository.model.TaskModel;
 import ru.mephi.tasuku.task.repository.model.TaskStatus;
-import ru.mephi.tasuku.task.service.exception.TaskIdNotFoundException;
+import ru.mephi.tasuku.task.service.exception.TaskByIdNotFoundException;
 import ru.mephi.tasuku.task.service.exception.TaskNameExistsException;
 import ru.mephi.tasuku.task.service.object.Task;
 
@@ -29,7 +29,7 @@ public class TaskService {
 
 	public Task getById(long taskId) {
 		TaskModel taskModel = taskRepository.findById(taskId)
-				.orElseThrow(() -> new TaskIdNotFoundException(taskId));
+				.orElseThrow(() -> new TaskByIdNotFoundException(taskId));
 		return TaskModelMapper.modelToObject(taskModel);
 	}
 
@@ -69,7 +69,7 @@ public class TaskService {
 	@Transactional
 	public void deleteTask(long taskId) {
 		if (!taskRepository.existsById(taskId)) {
-			throw new TaskIdNotFoundException(taskId);
+			throw new TaskByIdNotFoundException(taskId);
 		}
 		taskRepository.deleteById(taskId);
 	}
