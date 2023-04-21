@@ -2,9 +2,10 @@ package ru.mephi.tasuku.binding.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.mephi.tasuku.binding.repository.ProjectUserRoleRepository;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class ProjectUserRoleService {
 	private final ProjectUserRoleRepository projectUserRoleRepository;

@@ -1,8 +1,10 @@
 package ru.mephi.tasuku.task.controller.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 
-@Getter
+@Data
 public class TaskCreateRequest {
 	private String name;
 	private Long assigneeId;

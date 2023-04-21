@@ -12,7 +12,7 @@ import ru.mephi.tasuku.sprint.service.object.Sprint;
 public class SprintService {
 	private final SprintRepository sprintRepository;
 
-	public Sprint findById(Long id) {
+	public Sprint getById(Long id) {
 		if (id == null) {
 			return null;
 		}

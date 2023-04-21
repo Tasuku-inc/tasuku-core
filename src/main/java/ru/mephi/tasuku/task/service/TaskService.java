@@ -23,8 +23,7 @@ public class TaskService {
 
 	public List<Task> findAllInProject(long projectId) {
 		return taskRepository.getAllByProjectId(projectId)
-				.stream()
-				.map(TaskModelMapper::modelToObject)
+				.stream().map(TaskModelMapper::modelToObject)
 				.toList();
 	}
 
@@ -67,6 +66,7 @@ public class TaskService {
 		return taskRepository.save(taskModel).getId();
 	}
 
+	@Transactional
 	public void deleteTask(long taskId) {
 		if (!taskRepository.existsById(taskId)) {
 			throw new TaskIdNotFoundException(taskId);

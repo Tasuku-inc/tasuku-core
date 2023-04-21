@@ -35,8 +35,8 @@ public class TaskDtoMapper {
 				.assignee(appUserService.findById(dto.getAssigneeId()))
 				.status(TaskStatus.OPENED)
 				.description(dto.getDescription())
-				.sprint(sprintService.findById(dto.getSprintId()))
-				.project(projectService.findById(dto.getProjectId()))
+				.sprint(sprintService.getById(dto.getSprintId()))
+				.project(projectService.getById(dto.getProjectId()))
 				.build();
 	}
 
@@ -46,7 +46,7 @@ public class TaskDtoMapper {
 				.assignee(appUserService.findById(dto.getAssigneeId()))
 				.reporter(appUserService.findById(dto.getReporterId()))
 				.status(dto.getStatus())
-				.sprint(sprintService.findById(dto.getSprintId()))
+				.sprint(sprintService.getById(dto.getSprintId()))
 				.description(dto.getDescription())
 				.build();
 	}

@@ -16,19 +16,21 @@ public class UserConditionEvaluator {
 	private final TaskService taskService;
 
 	public boolean canCreateTask(long projectId) {
-		AppUser user = ((SecurityUser) SecurityContextHolder.getContext()
-				.getAuthentication()
-				.getPrincipal()).getAppUser();
+		long authAppUserId = getAuthAppUserId();
 		return projectUserRoleService
-				.existsByProjectIdAndUserId(projectId, user.getId());
+				.existsByProjectIdAndUserId(projectId, authAppUserId);
 	}
 
 	public boolean canUpdateTask(long taskId) {
-		AppUser user = ((SecurityUser) SecurityContextHolder.getContext()
-				.getAuthentication()
-				.getPrincipal()).getAppUser();
+		long authAppUserId = getAuthAppUserId();
 		long projectId = taskService.getById(taskId).getProject().getId();
 		return projectUserRoleService
-				.existsByProjectIdAndUserId(projectId, user.getId());
+				.existsByProjectIdAndUserId(projectId, authAppUserId);
+	}
+
+	public long getAuthAppUserId() {
+		return  ((SecurityUser) SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal())
+				.getAppUser().getId();
 	}
 }

@@ -16,7 +16,7 @@ public class ProjectService {
 
     private final ProjectRepository projectRepository;
 
-    public Project findById(long id) {
+    public Project getById(long id) {
         ProjectModel model = projectRepository.findById(id)
                 .orElseThrow(() -> new ProjectIdNotFoundException(id));
         return ProjectModelMapper.modelToObject(model);

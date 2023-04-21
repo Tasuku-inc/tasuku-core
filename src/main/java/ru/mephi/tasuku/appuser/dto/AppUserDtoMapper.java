@@ -9,6 +9,7 @@ public class AppUserDtoMapper {
 				.id(object.getId())
 				.email(object.getEmail())
 				.username(object.getUsername())
+				.systemRole(object.getSystemRole())
 				.build();
 	}
 }

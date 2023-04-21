@@ -14,7 +14,7 @@ import ru.mephi.tasuku.task.service.object.Task;
 public class TaskModelMapper {
 
 	public static Task modelToObject(TaskModel model) {
-		var object = Task.builder()
+		Task.TaskBuilder object = Task.builder()
 				.id(model.getId())
 				.name(model.getName())
 				.reporter(AppUserModelMapper.modelToObject(model.getReporter()))
@@ -31,7 +31,7 @@ public class TaskModelMapper {
 	}
 
 	public static TaskModel objectToModel(Task object) {
-		var model = TaskModel.builder()
+		TaskModel.TaskModelBuilder model = TaskModel.builder()
 				.id(object.getId())
 				.name(object.getName())
 				.reporter(AppUserModelMapper.objectToModel(object.getReporter()))

@@ -15,7 +15,7 @@ public class ProjectDtoMapper {
     public Project dtoToObject(ProjectResponse dto) {
         return Project.builder()
                 .name(dto.getName())
-                .closed(false)
+                .closed(dto.isClosed())
                 .build();
     }
 
@@ -31,7 +31,7 @@ public class ProjectDtoMapper {
         return Project.builder()
                 .name(dto.getName())
                 .headUser(appUserService.findById(dto.getHeadUserId()))
-                .closed(false)
+                .closed(dto.getClosed())
                 .build();
     }
 }

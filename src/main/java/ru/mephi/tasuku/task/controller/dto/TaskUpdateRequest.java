@@ -1,9 +1,9 @@
 package ru.mephi.tasuku.task.controller.dto;
 
-import lombok.Getter;
+import lombok.Data;
 import ru.mephi.tasuku.task.repository.model.TaskStatus;
 
-@Getter
+@Data
 public class TaskUpdateRequest {
 	private String name;
 	private Long assigneeId;

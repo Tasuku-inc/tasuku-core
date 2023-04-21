@@ -17,15 +17,12 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http)
 			throws Exception {
-		http
-				.cors()
+		return http.cors()
 				.and().csrf().disable()
 				.httpBasic()
-				.and()
-					.authorizeHttpRequests()
-					.anyRequest().authenticated()
-				.and().formLogin();
-		return http.build();
+				.and().authorizeHttpRequests()
+				.anyRequest().authenticated()
+				.and().build();
 	}
 
 	@Bean

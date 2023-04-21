@@ -21,7 +21,7 @@ public class ProjectController {
 
     @GetMapping("/{projectId}")
     public ProjectResponse getProject(@PathVariable long projectId) {
-        return projectDtoMapper.objectToDto(projectService.findById(projectId));
+        return projectDtoMapper.objectToDto(projectService.getById(projectId));
     }
 
     @GetMapping
