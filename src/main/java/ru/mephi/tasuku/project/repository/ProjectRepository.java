@@ -6,4 +6,5 @@ import ru.mephi.tasuku.project.repository.model.ProjectModel;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<ProjectModel, Long> {
+	boolean existsByName(String name);
 }
