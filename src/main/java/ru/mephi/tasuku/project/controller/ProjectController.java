@@ -25,7 +25,7 @@ public class ProjectController {
 
     @GetMapping
     public List<ProjectResponse> getAllProjects() {
-        return projectService.findAll().stream()
+        return projectService.getAll().stream()
                 .map(projectDtoMapper::objectToDto)
                 .toList();
     }

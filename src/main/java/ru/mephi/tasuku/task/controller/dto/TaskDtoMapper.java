@@ -2,7 +2,7 @@ package ru.mephi.tasuku.task.controller.dto;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.mephi.tasuku.appuser.dto.AppUserDtoMapper;
+import ru.mephi.tasuku.appuser.controller.AppUserDtoMapper;
 import ru.mephi.tasuku.appuser.service.AppUserService;
 import ru.mephi.tasuku.project.service.ProjectService;
 import ru.mephi.tasuku.sprint.service.SprintService;
@@ -32,7 +32,7 @@ public class TaskDtoMapper {
 	public Task createDtoToObject(TaskCreateRequest dto) {
 		return Task.builder()
 				.name(dto.getName())
-				.assignee(appUserService.findById(dto.getAssigneeId()))
+				.assignee(appUserService.getById(dto.getAssigneeId()))
 				.status(TaskStatus.OPENED)
 				.description(dto.getDescription())
 				.sprint(sprintService.getById(dto.getSprintId()))
@@ -43,8 +43,8 @@ public class TaskDtoMapper {
 	public Task updateDtoToObject(TaskUpdateRequest dto) {
 		return Task.builder()
 				.name(dto.getName())
-				.assignee(appUserService.findById(dto.getAssigneeId()))
-				.reporter(appUserService.findById(dto.getReporterId()))
+				.assignee(appUserService.getById(dto.getAssigneeId()))
+				.reporter(appUserService.getById(dto.getReporterId()))
 				.status(dto.getStatus())
 				.sprint(sprintService.getById(dto.getSprintId()))
 				.description(dto.getDescription())

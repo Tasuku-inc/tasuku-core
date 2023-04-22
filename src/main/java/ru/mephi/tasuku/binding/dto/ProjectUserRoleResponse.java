@@ -1,6 +1,6 @@
 package ru.mephi.tasuku.binding.dto;
 
-import ru.mephi.tasuku.appuser.dto.AppUserResponse;
+import ru.mephi.tasuku.appuser.controller.dto.AppUserResponse;
 import lombok.Builder;
 import lombok.Data;
 import ru.mephi.tasuku.appuser.repository.model.UserRole;

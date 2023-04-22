@@ -9,8 +9,6 @@ import ru.mephi.tasuku.project.repository.ProjectRepository;
 import ru.mephi.tasuku.project.repository.model.ProjectModel;
 import ru.mephi.tasuku.project.service.exception.ProjectIdNotFoundException;
 import ru.mephi.tasuku.project.service.object.Project;
-import ru.mephi.tasuku.task.controller.dto.TaskDtoMapper;
-import ru.mephi.tasuku.task.controller.dto.TaskResponse;
 import ru.mephi.tasuku.task.service.TaskService;
 import ru.mephi.tasuku.task.service.object.Task;
 
@@ -27,7 +25,7 @@ public class ProjectService {
         return ProjectModelMapper.modelToObject(model);
     }
 
-    public List<Project> findAll() {
+    public List<Project> getAll() {
         return projectRepository.findAll().stream()
                 .map(ProjectModelMapper::modelToObject)
                 .toList();
@@ -39,6 +37,7 @@ public class ProjectService {
 
     @Transactional
     public long createProject(Project project) {
+        //TODO проверка на свободность имени проекта
         ProjectModel model = ProjectModelMapper.objectToModel(project);
         return projectRepository.save(model).getId();
     }

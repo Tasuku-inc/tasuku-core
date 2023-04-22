@@ -22,7 +22,7 @@ public class TaskService {
 	private final TaskRepository taskRepository;
 
 	public List<Task> findAllInProject(long projectId) {
-		return taskRepository.getAllByProjectId(projectId)
+		return taskRepository.findAllByProjectId(projectId)
 				.stream().map(TaskModelMapper::modelToObject)
 				.toList();
 	}
@@ -57,7 +57,6 @@ public class TaskService {
 				&& isNameOccupied(updatedName)) {
 			throw new TaskNameExistsException(updatedTask.getName());
 		}
-
 		updatedTask.setId(taskId);
 		updatedTask.setProject(oldTask.getProject());
 
@@ -75,6 +74,6 @@ public class TaskService {
 	}
 
 	private boolean isNameOccupied(String name) {
-		return taskRepository.getByName(name).isPresent();
+		return taskRepository.findByName(name).isPresent();
 	}
 }

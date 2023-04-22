@@ -12,13 +12,6 @@ import ru.mephi.tasuku.project.service.object.Project;
 public class ProjectDtoMapper {
     private final AppUserService appUserService;
 
-    public Project dtoToObject(ProjectResponse dto) {
-        return Project.builder()
-                .name(dto.getName())
-                .closed(dto.isClosed())
-                .build();
-    }
-
     public ProjectResponse objectToDto(Project object) {
         return ProjectResponse.builder()
                 .id(object.getId())
@@ -30,7 +23,7 @@ public class ProjectDtoMapper {
     public Project requestDtoToObject(ProjectRequest dto) {
         return Project.builder()
                 .name(dto.getName())
-                .headUser(appUserService.findById(dto.getHeadUserId()))
+                .headUser(appUserService.getById(dto.getHeadUserId()))
                 .closed(dto.getClosed())
                 .build();
     }
