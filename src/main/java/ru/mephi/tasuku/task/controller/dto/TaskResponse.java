@@ -13,7 +13,8 @@ public class TaskResponse {
     private String name;
     private AppUserResponse reporter;
     private AppUserResponse assignee;
-    private ProjectResponse project;
     private TaskStatus status;
+    private long projectId;
+    private long sprintId;
     private String description;
 }

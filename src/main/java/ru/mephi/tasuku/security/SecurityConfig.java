@@ -17,11 +17,11 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http)
 			throws Exception {
-		return http.httpBasic()
-				.and()
-					.authorizeHttpRequests()
-					.anyRequest().authenticated()
-				.and().formLogin()
+		return http.cors()
+				.and().csrf().disable()
+				.httpBasic()
+				.and().authorizeHttpRequests()
+				.anyRequest().authenticated()
 				.and().build();
 	}
 
