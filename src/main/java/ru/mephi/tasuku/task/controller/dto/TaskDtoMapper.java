@@ -15,13 +15,14 @@ public class TaskDtoMapper {
 	private final AppUserService appUserService;
 	private final SprintService sprintService;
 	private final ProjectService projectService;
+	private final AppUserDtoMapper appUserDtoMapper;
 
-	public static TaskResponse objectToDto(Task object) {
+	public TaskResponse objectToDto(Task object) {
 		return TaskResponse.builder()
 				.taskId(object.getId())
 				.name(object.getName())
-				.assignee(AppUserDtoMapper.objectToDto(object.getAssignee()))
-				.reporter(AppUserDtoMapper.objectToDto(object.getReporter()))
+				.assignee(appUserDtoMapper.objectToDto(object.getAssignee()))
+				.reporter(appUserDtoMapper.objectToDto(object.getReporter()))
 				.description(object.getDescription())
 				.status(object.getStatus())
 				.projectId(object.getProject().getId())

@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.mephi.tasuku.appuser.controller.dto.AppUserCreateRequest;
 import ru.mephi.tasuku.appuser.controller.dto.AppUserResponse;
 import ru.mephi.tasuku.appuser.controller.dto.AppUserUpdateRequest;
+import ru.mephi.tasuku.appuser.controller.dto.SystemRoleRequest;
 import ru.mephi.tasuku.appuser.service.AppUserService;
+import ru.mephi.tasuku.security.UserConditionEvaluator;
 
 import java.util.List;
 
@@ -17,48 +19,53 @@ import java.util.List;
 @EnableMethodSecurity
 public class AppUserController {
 	private final AppUserService appUserService;
+	private final AppUserDtoMapper appUserDtoMapper;
+	private final UserConditionEvaluator userConditionEvaluator;
 
 	@GetMapping("/")
-	public List<AppUserResponse> getAllAppUsers() {
-		return appUserService.getAll()
-				.stream().map(AppUserDtoMapper::objectToDto)
-				.toList();
+	public List<AppUserResponse> getAll() {
+		return appUserService.getAll().stream()
+				.map(appUserDtoMapper::objectToDto).toList();
 	}
 
 	@GetMapping("/{appUserId}")
-	public AppUserResponse getAppUser(@PathVariable long appUserId) {
-		return AppUserDtoMapper.objectToDto(
+	public AppUserResponse get(@PathVariable long appUserId) {
+		return appUserDtoMapper.objectToDto(
 				appUserService.getById(appUserId)
 		);
 	}
 
 	@PostMapping("/create")
 	@PreAuthorize("hasRole('ADMIN')")
-	public long createUser(@RequestBody AppUserCreateRequest dto) {
-		return appUserService.createUser(
-				AppUserDtoMapper.createDtoToObject(dto)
+	public long create(@RequestBody AppUserCreateRequest dto) {
+		return appUserService.create(
+				appUserDtoMapper.createDtoToObject(dto)
 		);
 	}
 
 	@PostMapping("/{appUserId}/update")
-	public void updateUser(@PathVariable long appUserId,
-						   @RequestBody AppUserUpdateRequest dto) {
-		appUserService.updateUser(
+	@PreAuthorize("@userConditionEvaluator.canUpdateAppUser(#appUserId) or hasRole('ADMIN')")
+	public void update(@PathVariable long appUserId,
+					   @RequestBody AppUserUpdateRequest dto) {
+		appUserService.update(
 				appUserId,
-				AppUserDtoMapper.updateDtoToObject(dto)
+				appUserDtoMapper.updateDtoToObject(dto)
 		);
 	}
 
 	@DeleteMapping("/{appUserId}/delete")
 	@PreAuthorize("hasRole('ADMIN')")
-	public void deleteUser(@PathVariable long appUserId) {
-		appUserService.deleteUser(appUserId);
+	public void delete(@PathVariable long appUserId) {
+		appUserService.delete(appUserId);
 	}
 
-	@PostMapping("/{appUserId}/updateSystemRole/{systemRole}")
+	@PostMapping("/{appUserId}/updateSystemRole")
 	@PreAuthorize("hasRole('ADMIN')")
 	public void updateSystemRole(@PathVariable long appUserId,
-								 @PathVariable String systemRole) {
-		appUserService.updateSystemRole(appUserId, systemRole);
+								 @RequestBody SystemRoleRequest dto) {
+		appUserService.updateSystemRole(
+				appUserId,
+				SystemRoleDtoMapper.dtoToObject(dto)
+		);
 	}
 }

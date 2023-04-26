@@ -1,13 +1,19 @@
 package ru.mephi.tasuku.appuser.controller;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import ru.mephi.tasuku.appuser.controller.dto.AppUserCreateRequest;
 import ru.mephi.tasuku.appuser.controller.dto.AppUserResponse;
 import ru.mephi.tasuku.appuser.controller.dto.AppUserUpdateRequest;
 import ru.mephi.tasuku.appuser.service.object.AppUser;
 
+@Component
+@RequiredArgsConstructor
 public class AppUserDtoMapper {
+	private final PasswordEncoder passwordEncoder;
 
-	public static AppUserResponse objectToDto(AppUser object) {
+	public AppUserResponse objectToDto(AppUser object) {
 		return AppUserResponse.builder()
 				.id(object.getId())
 				.email(object.getEmail())
@@ -16,20 +22,20 @@ public class AppUserDtoMapper {
 				.build();
 	}
 
-	public static AppUser createDtoToObject(AppUserCreateRequest dto) {
+	public AppUser createDtoToObject(AppUserCreateRequest dto) {
 		return AppUser.builder()
 				.email(dto.getEmail())
 				.username(dto.getUsername())
 				.systemRole(dto.getSystemRole())
-				.password(dto.getPassword())
+				.password(passwordEncoder.encode(dto.getPassword()))
 				.build();
 	}
 
-	public static AppUser updateDtoToObject(AppUserUpdateRequest dto) {
+	public AppUser updateDtoToObject(AppUserUpdateRequest dto) {
 		return AppUser.builder()
 				.email(dto.getEmail())
 				.username(dto.getUsername())
-				.password(dto.getPassword())
+				.password(passwordEncoder.encode(dto.getPassword()))
 				.build();
 	}
 }

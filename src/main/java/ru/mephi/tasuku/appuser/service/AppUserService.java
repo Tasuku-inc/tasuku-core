@@ -34,15 +34,17 @@ public class AppUserService {
     }
 
 	public List<AppUser> getAll() {
-        return appUserRepository.findAll()
-                .stream().map(AppUserModelMapper::modelToObject)
-                .toList();
+        return appUserRepository.findAll().stream()
+                .map(AppUserModelMapper::modelToObject).toList();
 	}
 
     @Transactional
-    public long createUser(AppUser appUser) {
+    public long create(AppUser appUser) {
         if (isUsernameOccupied(appUser.getUsername())) {
             throw new AppUserUsernameExistsException(appUser.getUsername());
+        }
+        if (isEmailOccupied(appUser.getEmail())) {
+            throw new AppUserEmailExistsException(appUser.getEmail());
         }
         appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
         AppUserModel appUserModel = AppUserModelMapper.objectToModel(appUser);
@@ -50,7 +52,7 @@ public class AppUserService {
     }
 
     @Transactional
-    public void updateUser(long appUserId, AppUser updatedAppUser) {
+    public void update(long appUserId, AppUser updatedAppUser) {
         AppUser oldAppUser = this.getById(appUserId);
         String oldUsername = oldAppUser.getUsername();
         String updatedUsername = updatedAppUser.getUsername();
@@ -72,7 +74,7 @@ public class AppUserService {
     }
 
     @Transactional
-    public void deleteUser(long appUserId) {
+    public void delete(long appUserId) {
         if (!appUserRepository.existsById(appUserId)) {
             throw new AppUserByIdNotFoundException(appUserId);
         }
@@ -80,9 +82,9 @@ public class AppUserService {
     }
 
     @Transactional
-    public void updateSystemRole(long appUserId, String systemRole) {
+    public void updateSystemRole(long appUserId, SystemRole systemRole) {
         AppUser appUser = this.getById(appUserId);
-        appUser.setSystemRole(SystemRole.valueOf(systemRole));
+        appUser.setSystemRole(systemRole);
         appUserRepository.save(
                 AppUserModelMapper.objectToModel(appUser)
         );
