@@ -47,7 +47,7 @@ public class AppUserController {
 	@PostMapping("/{appUserId}/update")
 	@PreAuthorize("@userConditionEvaluator.canUpdateAppUser(#appUserId) or hasRole('ADMIN')")
 	public void update(@PathVariable long appUserId,
-					   @RequestBody AppUserUpdateRequest dto) {
+					   @Valid @RequestBody AppUserUpdateRequest dto) {
 		appUserService.update(
 				appUserId,
 				appUserDtoMapper.updateDtoToObject(dto, appUserId)
