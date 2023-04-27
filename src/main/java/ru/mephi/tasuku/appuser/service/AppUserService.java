@@ -19,7 +19,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AppUserService {
     private final AppUserRepository appUserRepository;
-    private final PasswordEncoder passwordEncoder;
 
     public AppUser getByUsername(String username) {
         AppUserModel appUserModel = appUserRepository.findByUsername(username)
@@ -46,7 +45,7 @@ public class AppUserService {
         if (isEmailOccupied(appUser.getEmail())) {
             throw new AppUserEmailExistsException(appUser.getEmail());
         }
-        appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
+
         AppUserModel appUserModel = AppUserModelMapper.objectToModel(appUser);
         return appUserRepository.save(appUserModel).getId();
     }

@@ -17,8 +17,9 @@ import java.util.stream.Collectors;
 public class ValidationExceptionHandler {
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Map<String, List<String>>> handleValidationErrors(MethodArgumentNotValidException ex) {
-		List<String> errors = ex.getBindingResult().getFieldErrors()
-				.stream().map(FieldError::getDefaultMessage).collect(Collectors.toList());
+		List<String> errors = ex.getBindingResult().getFieldErrors().stream()
+				.map(FieldError::getDefaultMessage)
+				.toList();
 		return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.BAD_REQUEST);
 	}
 

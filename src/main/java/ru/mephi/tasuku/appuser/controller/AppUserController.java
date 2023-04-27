@@ -26,7 +26,8 @@ public class AppUserController {
 	@GetMapping("/")
 	public List<AppUserResponse> getAll() {
 		return appUserService.getAll().stream()
-				.map(appUserDtoMapper::objectToDto).toList();
+				.map(appUserDtoMapper::objectToDto)
+				.toList();
 	}
 
 	@GetMapping("/{appUserId}")
