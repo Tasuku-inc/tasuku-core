@@ -46,6 +46,22 @@ public class ProjectService {
     }
 
     @Transactional
+    public void updateProject(long projectId, Project updatedProject) {
+        Project currentProject = this.getById(projectId);
+
+        String currentName = currentProject.getName();
+        String updatedName = updatedProject.getName();
+
+        if (!currentName.equals(updatedName)
+                && isProjectNameOccupied(updatedName)) {
+            throw new ProjectNameExistsException(updatedName);
+        }
+
+        ProjectModel model = ProjectModelMapper.objectToModel(updatedProject);
+        projectRepository.save(model);
+    }
+
+    @Transactional
     public void deleteProject(long id) {
         ProjectModel model = projectRepository.findById(id)
                 .orElseThrow(() -> new ProjectByIdNotFoundException(id));

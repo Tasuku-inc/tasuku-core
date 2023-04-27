@@ -2,14 +2,15 @@ package ru.mephi.tasuku.project.controller;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.mephi.tasuku.project.controller.dto.ProjectRequest;
+import ru.mephi.tasuku.project.controller.dto.ProjectCreateRequest;
 import ru.mephi.tasuku.project.controller.dto.ProjectResponse;
+import ru.mephi.tasuku.project.controller.dto.ProjectUpdateRequest;
 import ru.mephi.tasuku.project.service.ProjectService;
 import ru.mephi.tasuku.task.controller.dto.TaskDtoMapper;
 import ru.mephi.tasuku.task.controller.dto.TaskResponse;
-import ru.mephi.tasuku.task.service.TaskService;
 
 @RestController
 @RequestMapping("/projects")
@@ -32,18 +33,27 @@ public class ProjectController {
     }
 
     @PostMapping("/create")
-    public long createProject(@RequestBody ProjectRequest projectDto) {
-        return projectService.createProject(projectDtoMapper.requestDtoToObject(projectDto));
+    public long createProject(@Valid @RequestBody ProjectCreateRequest projectDto) {
+        return projectService.createProject(projectDtoMapper.createDtoToObject(projectDto));
     }
 
-    @DeleteMapping("/delete/{projectId}")
+    @PostMapping("{projectId}/update")
+    public void updateProject(@PathVariable long projectId,
+                              @Valid @RequestBody ProjectUpdateRequest dto) {
+        projectService.updateProject(projectId,
+                projectDtoMapper.updateDtoToObject(dto, projectId)
+        );
+    }
+
+    @DeleteMapping("/{projectId}/delete")
     public void deleteProject(@PathVariable long projectId) {
         projectService.deleteProject(projectId);
     }
 
     @GetMapping("/{projectId}/tasks")
     public List<TaskResponse> findAllProjectTasks(@PathVariable long projectId) {
-        return projectService.getTasks(projectId)
-                .stream().map(taskDtoMapper::objectToDto).toList();
+        return projectService.getTasks(projectId).stream()
+                .map(taskDtoMapper::objectToDto)
+                .toList();
     }
 }

@@ -1,5 +1,6 @@
 package ru.mephi.tasuku.task.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -27,7 +28,7 @@ public class TaskController {
 
 	@PostMapping("/create")
 	@PreAuthorize("@userConditionEvaluator.canCreateTask(#taskDto.projectId) or hasRole('ADMIN')")
-	public long createTask(@RequestBody TaskCreateRequest taskDto) {
+	public long createTask(@Valid @RequestBody TaskCreateRequest taskDto) {
 		return taskService.createTask(
 				taskDtoMapper.createDtoToObject(taskDto)
 		);
@@ -35,12 +36,11 @@ public class TaskController {
 
 	@PostMapping("{taskId}/update")
 	@PreAuthorize("@userConditionEvaluator.canUpdateTask(#taskId) or hasRole('ADMIN')")
-	public long updateTask(@PathVariable long taskId,
-						   @RequestBody TaskUpdateRequest taskDto) {
-		return taskService.updateTask(
+	public void updateTask(@PathVariable long taskId,
+						   @Valid @RequestBody TaskUpdateRequest taskDto) {
+		taskService.updateTask(
 				taskId,
-				taskDtoMapper.updateDtoToObject(taskDto)
-		);
+				taskDtoMapper.updateDtoToObject(taskDto, taskId));
 	}
 
 	@DeleteMapping("{taskId}/delete")

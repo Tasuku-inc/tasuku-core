@@ -7,7 +7,10 @@ import ru.mephi.tasuku.appuser.service.AppUserService;
 import ru.mephi.tasuku.project.service.ProjectService;
 import ru.mephi.tasuku.sprint.service.SprintService;
 import ru.mephi.tasuku.task.repository.model.TaskStatus;
+import ru.mephi.tasuku.task.service.TaskService;
 import ru.mephi.tasuku.task.service.object.Task;
+
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -16,6 +19,7 @@ public class TaskDtoMapper {
 	private final SprintService sprintService;
 	private final ProjectService projectService;
 	private final AppUserDtoMapper appUserDtoMapper;
+	private final TaskService taskService;
 
 	public TaskResponse objectToDto(Task object) {
 		return TaskResponse.builder()
@@ -41,14 +45,27 @@ public class TaskDtoMapper {
 				.build();
 	}
 
-	public Task updateDtoToObject(TaskUpdateRequest dto) {
+	public Task updateDtoToObject(TaskUpdateRequest dto, long taskId) {
+		Task currentTask = taskService.getById(taskId);
+
 		return Task.builder()
-				.name(dto.getName())
-				.assignee(appUserService.getById(dto.getAssigneeId()))
-				.reporter(appUserService.getById(dto.getReporterId()))
-				.status(dto.getStatus())
-				.sprint(sprintService.getById(dto.getSprintId()))
-				.description(dto.getDescription())
+				.id(taskId)
+				.project(currentTask.getProject())
+				.name(Optional.ofNullable(dto.getName())
+						.orElse(currentTask.getName()))
+				.assignee(Optional.ofNullable(dto.getAssigneeId())
+						.map(appUserService::getById)
+						.orElse(currentTask.getAssignee()))
+				.reporter(Optional.ofNullable(dto.getReporterId())
+						.map(appUserService::getById)
+						.orElse(currentTask.getReporter()))
+				.status(Optional.ofNullable(dto.getStatus())
+						.orElse(currentTask.getStatus()))
+				.sprint(Optional.ofNullable(dto.getSprintId())
+						.map(sprintService::getById)
+						.orElse(currentTask.getSprint()))
+				.description(Optional.ofNullable(dto.getDescription())
+						.orElse(currentTask.getDescription()))
 				.build();
 	}
 }
