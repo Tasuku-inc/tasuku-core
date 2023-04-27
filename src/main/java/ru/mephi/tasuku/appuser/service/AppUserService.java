@@ -54,20 +54,23 @@ public class AppUserService {
     @Transactional
     public void update(long appUserId, AppUser updatedAppUser) {
         AppUser oldAppUser = this.getById(appUserId);
+
         String oldUsername = oldAppUser.getUsername();
         String updatedUsername = updatedAppUser.getUsername();
-        String oldEmail = oldAppUser.getEmail();
-        String updatedEmail = updatedAppUser.getEmail();
+
         if (!oldUsername.equals(updatedUsername)
                 && isUsernameOccupied(updatedUsername)) {
             throw new AppUserUsernameExistsException(updatedUsername);
         }
+
+        String oldEmail = oldAppUser.getEmail();
+        String updatedEmail = updatedAppUser.getEmail();
+
         if (!oldEmail.equals(updatedEmail)
                 && isEmailOccupied(updatedEmail)) {
             throw new AppUserEmailExistsException(updatedEmail);
         }
 
-        updatedAppUser.setId(appUserId);
         appUserRepository.save(
                 AppUserModelMapper.objectToModel(updatedAppUser)
         );

@@ -6,12 +6,16 @@ import org.springframework.stereotype.Component;
 import ru.mephi.tasuku.appuser.controller.dto.AppUserCreateRequest;
 import ru.mephi.tasuku.appuser.controller.dto.AppUserResponse;
 import ru.mephi.tasuku.appuser.controller.dto.AppUserUpdateRequest;
+import ru.mephi.tasuku.appuser.service.AppUserService;
 import ru.mephi.tasuku.appuser.service.object.AppUser;
+
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
 public class AppUserDtoMapper {
 	private final PasswordEncoder passwordEncoder;
+	private final AppUserService appUserService;
 
 	public AppUserResponse objectToDto(AppUser object) {
 		return AppUserResponse.builder()
@@ -31,11 +35,20 @@ public class AppUserDtoMapper {
 				.build();
 	}
 
-	public AppUser updateDtoToObject(AppUserUpdateRequest dto) {
+	public AppUser updateDtoToObject(AppUserUpdateRequest dto,
+									 long appUserId) {
+		AppUser currentUserState = appUserService.getById(appUserId);
+
 		return AppUser.builder()
-				.email(dto.getEmail())
-				.username(dto.getUsername())
-				.password(passwordEncoder.encode(dto.getPassword()))
+				.id(appUserId)
+				.email(Optional.ofNullable(dto.getEmail())
+						.orElse(currentUserState.getEmail()))
+				.username(Optional.ofNullable(dto.getUsername())
+						.orElse(currentUserState.getUsername()))
+				.password(Optional.ofNullable(dto.getPassword())
+						.map(passwordEncoder::encode)
+						.orElse(currentUserState.getPassword()))
+				.systemRole(currentUserState.getSystemRole())
 				.build();
 	}
 }

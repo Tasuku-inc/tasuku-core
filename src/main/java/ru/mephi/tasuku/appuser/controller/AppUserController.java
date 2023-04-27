@@ -1,5 +1,6 @@
 package ru.mephi.tasuku.appuser.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -37,7 +38,7 @@ public class AppUserController {
 
 	@PostMapping("/create")
 	@PreAuthorize("hasRole('ADMIN')")
-	public long create(@RequestBody AppUserCreateRequest dto) {
+	public long create(@Valid @RequestBody AppUserCreateRequest dto) {
 		return appUserService.create(
 				appUserDtoMapper.createDtoToObject(dto)
 		);
@@ -49,7 +50,7 @@ public class AppUserController {
 					   @RequestBody AppUserUpdateRequest dto) {
 		appUserService.update(
 				appUserId,
-				appUserDtoMapper.updateDtoToObject(dto)
+				appUserDtoMapper.updateDtoToObject(dto, appUserId)
 		);
 	}
 
