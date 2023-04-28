@@ -9,4 +9,5 @@ import ru.mephi.tasuku.appuser.repository.model.AppUserModel;
 public interface AppUserRepository extends JpaRepository<AppUserModel, Long> {
 	Optional<AppUserModel> findByUsername(String username);
 
+	Optional<AppUserModel> findByEmail(String email);
 }

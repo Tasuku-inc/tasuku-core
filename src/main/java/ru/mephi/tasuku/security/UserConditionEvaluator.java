@@ -28,6 +28,11 @@ public class UserConditionEvaluator {
 				.existsByProjectIdAndUserId(projectId, authAppUserId);
 	}
 
+	public boolean canUpdateAppUser(long appUserId) {
+		long authAppUserId = getAuthAppUserId();
+		return appUserId == authAppUserId;
+	}
+
 	public long getAuthAppUserId() {
 		return  ((SecurityUser) SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal())

@@ -22,7 +22,7 @@ public class TaskService {
 	private final TaskRepository taskRepository;
 
 	public List<Task> findAllInProject(long projectId) {
-		return taskRepository.getAllByProjectId(projectId)
+		return taskRepository.findAllByProjectId(projectId)
 				.stream().map(TaskModelMapper::modelToObject)
 				.toList();
 	}
@@ -49,21 +49,17 @@ public class TaskService {
 	}
 
 	@Transactional
-	public long updateTask(long taskId, Task updatedTask) {
-		Task oldTask = this.getById(taskId);
-		String oldName = oldTask.getName();
+	public void updateTask(long taskId, Task updatedTask) {
+		Task currentTask = this.getById(taskId);
+		String currentName = currentTask.getName();
 		String updatedName = updatedTask.getName();
-		if (!oldName.equals(updatedName)
+		if (!currentName.equals(updatedName)
 				&& isNameOccupied(updatedName)) {
 			throw new TaskNameExistsException(updatedTask.getName());
 		}
 
-		updatedTask.setId(taskId);
-		updatedTask.setProject(oldTask.getProject());
-
-		TaskModel taskModel = TaskModelMapper.objectToModel(updatedTask);
-
-		return taskRepository.save(taskModel).getId();
+		TaskModel model = TaskModelMapper.objectToModel(updatedTask);
+		taskRepository.save(model);
 	}
 
 	@Transactional
@@ -75,6 +71,6 @@ public class TaskService {
 	}
 
 	private boolean isNameOccupied(String name) {
-		return taskRepository.getByName(name).isPresent();
+		return taskRepository.findByName(name).isPresent();
 	}
 }
