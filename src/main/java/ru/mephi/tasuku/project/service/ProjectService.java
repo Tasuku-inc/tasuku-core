@@ -34,7 +34,7 @@ public class ProjectService {
     }
 
     public List<Task> getTasks(long projectId) {
-        return taskService.findAllInProject(projectId);
+        return taskService.getAllByProjectId(projectId);
     }
 
     @Transactional

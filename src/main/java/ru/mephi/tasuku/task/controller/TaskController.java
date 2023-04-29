@@ -29,15 +29,14 @@ public class TaskController {
 		return taskService.createTask(taskDtoMapper.createDtoToObject(taskDto));
 	}
 
-	@PreAuthorize("@userConditionEvaluator.canUpdateTask(#taskId) or hasRole('ADMIN')")
-	@PostMapping("{taskId}/update")
-	public void updateTask(@PathVariable long taskId,
-						   @Valid @RequestBody TaskUpdateRequest taskDto) {
-		taskService.updateTask(taskId, taskDtoMapper.updateDtoToObject(taskDto, taskId));
+	@PreAuthorize("@userConditionEvaluator.canUpdateTask(#taskDto.id) or hasRole('ADMIN')")
+	@PostMapping("/update")
+	public void updateTask(@Valid @RequestBody TaskUpdateRequest taskDto) {
+		taskService.updateTask(taskDtoMapper.updateDtoToObject(taskDto));
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
-	@DeleteMapping("{taskId}/delete")
+	@DeleteMapping("delete/{taskId}")
 	public void deleteTask(@PathVariable long taskId) {
 		taskService.deleteTask(taskId);
 	}
