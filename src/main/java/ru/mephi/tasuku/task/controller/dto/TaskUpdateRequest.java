@@ -11,6 +11,5 @@ public class TaskUpdateRequest {
 	private Long assigneeId;
 	private Long reporterId;
 	private TaskStatus status;
-	private Long sprintId;
 	private String description;
 }

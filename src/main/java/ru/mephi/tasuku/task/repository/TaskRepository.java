@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TaskRepository extends JpaRepository<TaskModel, Long> {
+
 	List<TaskModel> findAllByProjectId(long projectId);
 
 	Optional<TaskModel> findByName(String name);
