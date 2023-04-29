@@ -40,7 +40,7 @@ public class UserConditionEvaluator {
         return true;
     }
 
-    public AppUser getAuthAppUser() {
+    public static AppUser getAuthAppUser() {
         return ((SecurityUser) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal())
                 .getAppUser();
