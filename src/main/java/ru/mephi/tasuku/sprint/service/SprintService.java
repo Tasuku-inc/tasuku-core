@@ -10,6 +10,7 @@ import ru.mephi.tasuku.sprint.service.object.Sprint;
 @Service
 @RequiredArgsConstructor
 public class SprintService {
+
 	private final SprintRepository sprintRepository;
 
 	public Sprint getById(Long id) {
@@ -20,5 +21,4 @@ public class SprintService {
 				.orElseThrow(() -> new SprintIdNotFoundException(id));
 		return SprintModelMapper.modelToObject(sprintModel);
 	}
-
 }

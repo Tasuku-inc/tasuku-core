@@ -1,16 +1,15 @@
 package ru.mephi.tasuku.security;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.mephi.tasuku.appuser.repository.model.AppUserModel;
 import ru.mephi.tasuku.appuser.service.object.AppUser;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 @Builder
 public class SecurityUser implements UserDetails {

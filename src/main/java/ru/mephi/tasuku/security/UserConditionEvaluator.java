@@ -4,38 +4,45 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import ru.mephi.tasuku.appuser.service.object.AppUser;
-import ru.mephi.tasuku.binding.repository.ProjectUserRoleRepository;
-import ru.mephi.tasuku.binding.repository.model.ProjectUserRolePk;
 import ru.mephi.tasuku.binding.service.ProjectUserRoleService;
+import ru.mephi.tasuku.security.exception.NotAllowedException;
 import ru.mephi.tasuku.task.service.TaskService;
 
 @Component
 @RequiredArgsConstructor
 public class UserConditionEvaluator {
-	private final ProjectUserRoleService projectUserRoleService;
-	private final TaskService taskService;
 
-	public boolean canCreateTask(long projectId) {
-		long authAppUserId = getAuthAppUserId();
-		return projectUserRoleService
-				.existsByProjectIdAndUserId(projectId, authAppUserId);
-	}
+    private final ProjectUserRoleService projectUserRoleService;
+    private final TaskService taskService;
 
-	public boolean canUpdateTask(long taskId) {
-		long authAppUserId = getAuthAppUserId();
-		long projectId = taskService.getById(taskId).getProject().getId();
-		return projectUserRoleService
-				.existsByProjectIdAndUserId(projectId, authAppUserId);
-	}
+    public boolean canCreateTask(long projectId) {
+        long appUserId = getAuthAppUser().getId();
+        if (!projectUserRoleService.existsByProjectIdAndUserId(projectId, appUserId)) {
+            throw new NotAllowedException(appUserId);
+        }
+        return true;
+    }
 
-	public boolean canUpdateAppUser(long appUserId) {
-		long authAppUserId = getAuthAppUserId();
-		return appUserId == authAppUserId;
-	}
+    public boolean canUpdateTask(long taskId) {
+        long appUserId = getAuthAppUser().getId();
+        long projectId = taskService.getById(taskId).getProject().getId();
+        if (!projectUserRoleService.existsByProjectIdAndUserId(projectId, appUserId)) {
+            throw new NotAllowedException(appUserId);
+        }
+        return true;
+    }
 
-	public long getAuthAppUserId() {
-		return  ((SecurityUser) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal())
-				.getAppUser().getId();
-	}
+    public boolean canUpdateAppUser(long appUserId) {
+        long appUserUpdaterId = getAuthAppUser().getId();
+        if (appUserId == appUserUpdaterId) {
+            throw new NotAllowedException(appUserUpdaterId);
+        }
+        return true;
+    }
+
+    public static AppUser getAuthAppUser() {
+        return ((SecurityUser) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal())
+                .getAppUser();
+    }
 }
