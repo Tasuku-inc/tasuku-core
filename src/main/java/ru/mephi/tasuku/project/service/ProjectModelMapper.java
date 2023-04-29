@@ -1,18 +1,11 @@
 package ru.mephi.tasuku.project.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
+import java.util.List;
+
 import ru.mephi.tasuku.appuser.service.AppUserModelMapper;
-import ru.mephi.tasuku.binding.repository.model.ProjectUserRoleModel;
-import ru.mephi.tasuku.binding.service.ProjectUserRoleModelMapper;
 import ru.mephi.tasuku.project.repository.model.ProjectModel;
 import ru.mephi.tasuku.project.service.object.Project;
 import ru.mephi.tasuku.sprint.service.SprintModelMapper;
-import ru.mephi.tasuku.task.service.TaskModelMapper;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class ProjectModelMapper {
 
@@ -24,7 +17,10 @@ public class ProjectModelMapper {
                 .headUser(AppUserModelMapper.modelToObject(model.getHeadUser()))
                 .projectUserRoles(List.of())
                 .tasks(List.of())
-                .sprints(List.of())
+                .sprints(model.getSprints().stream()
+                        .map(SprintModelMapper::modelToObject)
+                        .toList()
+                )
                 .build();
     }
 
@@ -36,7 +32,10 @@ public class ProjectModelMapper {
                 .headUser(AppUserModelMapper.objectToModel(object.getHeadUser()))
                 .projectUserRoles(List.of())
                 .tasks(List.of())
-                .sprints(List.of())
+                .sprints(object.getSprints().stream()
+                        .map(SprintModelMapper::objectToModel)
+                        .toList()
+                )
                 .build();
     }
 

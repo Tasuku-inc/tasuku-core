@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.mephi.tasuku.appuser.service.object.AppUser;
 import ru.mephi.tasuku.security.SecurityUser;
+import ru.mephi.tasuku.sprint.SprintUtils;
 import ru.mephi.tasuku.task.repository.TaskRepository;
 import ru.mephi.tasuku.task.repository.model.TaskModel;
 import ru.mephi.tasuku.task.repository.model.TaskStatus;
@@ -43,6 +44,7 @@ public class TaskService {
 				.getContext().getAuthentication().getPrincipal()).getAppUser();
 		task.setReporter(reporter);
 		task.setStatus(TaskStatus.OPENED);
+		task.setSprint(SprintUtils.getActual());
 
 		TaskModel taskModel = TaskModelMapper.objectToModel(task);
 		return taskRepository.save(taskModel).getId();
@@ -50,7 +52,7 @@ public class TaskService {
 
 	@Transactional
 	public void updateTask(long taskId, Task updatedTask) {
-		Task currentTask = this.getById(taskId);
+		Task currentTask = getById(taskId);
 		String currentName = currentTask.getName();
 		String updatedName = updatedTask.getName();
 		if (!currentName.equals(updatedName)

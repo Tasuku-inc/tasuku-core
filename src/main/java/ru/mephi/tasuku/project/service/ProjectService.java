@@ -10,6 +10,7 @@ import ru.mephi.tasuku.project.repository.model.ProjectModel;
 import ru.mephi.tasuku.project.service.exception.ProjectByIdNotFoundException;
 import ru.mephi.tasuku.project.service.exception.ProjectNameExistsException;
 import ru.mephi.tasuku.project.service.object.Project;
+import ru.mephi.tasuku.sprint.SprintUtils;
 import ru.mephi.tasuku.task.service.TaskService;
 import ru.mephi.tasuku.task.service.object.Task;
 
@@ -41,6 +42,7 @@ public class ProjectService {
         if (isProjectNameOccupied(project.getName())) {
             throw new ProjectNameExistsException(project.getName());
         }
+        project.setSprints(List.of(SprintUtils.getActual()));
         ProjectModel model = ProjectModelMapper.objectToModel(project);
         return projectRepository.save(model).getId();
     }
