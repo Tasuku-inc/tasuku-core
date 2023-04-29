@@ -11,6 +11,7 @@ import ru.mephi.tasuku.task.service.TaskService;
 @Component
 @RequiredArgsConstructor
 public class UserConditionEvaluator {
+
     private final ProjectUserRoleService projectUserRoleService;
     private final TaskService taskService;
 
