@@ -17,6 +17,7 @@ public class TaskModelMapper {
                 .status(model.getStatus())
                 .description(model.getDescription())
                 .project(ProjectModelMapper.modelToObject(model.getProject()))
+                .sprint(SprintModelMapper.modelToObject(model.getSprint()))
                 .build();
     }
 
