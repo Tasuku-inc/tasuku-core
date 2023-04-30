@@ -42,7 +42,7 @@ public class AppUserModel {
 	private String password;
 	@Enumerated(EnumType.STRING)
 	private SystemRole systemRole;
-	@OneToMany(mappedBy = "pk.user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "pk.appUser", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ProjectUserRoleModel> projectUserRoles;
 	@OneToMany(mappedBy = "reporter")
 	private List<TaskModel> reportingTasks;

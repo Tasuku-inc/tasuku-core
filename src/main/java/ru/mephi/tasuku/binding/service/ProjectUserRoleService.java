@@ -16,14 +16,13 @@ public class ProjectUserRoleService {
 	private final ProjectUserRoleRepository projectUserRoleRepository;
 
 	public boolean existsByProjectIdAndUserId(long projectId, long userId) {
-		return !projectUserRoleRepository
-				.searchAllByProjectIdAndUserId(projectId, userId)
+		return !projectUserRoleRepository.searchAllByProjectIdAndUserId(projectId, userId)
 				.isEmpty();
 	}
 
 	public List<ProjectUserRole> getAllByProjectId(long projectId) {
-		List<ProjectUserRoleModel> models = projectUserRoleRepository
-				.findByPkProjectId(projectId);
+		List<ProjectUserRoleModel> models =
+				projectUserRoleRepository.findByPkProjectId(projectId);
 		return models.stream()
 				.map(ProjectUserRoleModelMapper::modelToObject)
 				.toList();
@@ -39,19 +38,19 @@ public class ProjectUserRoleService {
 
 	@Transactional
 	public void addMemberToProject(ProjectUserRole projectUserRole) {
-		ProjectUserRoleModel model = ProjectUserRoleModelMapper
-				.objectToModel(projectUserRole);
+		ProjectUserRoleModel model =
+				ProjectUserRoleModelMapper.objectToModel(projectUserRole);
 		projectUserRoleRepository.save(model);
 	}
 
 	@Transactional
 	public void updateMember(ProjectUserRole projectUserRole) {
-		long appUserId = projectUserRole.getUser().getId();
+		long appUserId = projectUserRole.getAppUser().getId();
 		long projectId = projectUserRole.getProject().getId();
 
 		if (existsByProjectIdAndUserId(projectId, appUserId)) {
-			ProjectUserRoleModel model = ProjectUserRoleModelMapper
-					.objectToModel(projectUserRole);
+			ProjectUserRoleModel model =
+					ProjectUserRoleModelMapper.objectToModel(projectUserRole);
 			projectUserRoleRepository.save(model);
 		} else {
 			throw new MemberByIdNotFoundException(appUserId);
@@ -61,8 +60,7 @@ public class ProjectUserRoleService {
 	@Transactional
 	public void deleteMember(long projectId, long appUserId) {
 		if (existsByProjectIdAndUserId(projectId, appUserId)) {
-			projectUserRoleRepository
-					.deleteMember(projectId, appUserId);
+			projectUserRoleRepository.deleteMember(projectId, appUserId);
 		} else {
 			throw new MemberByIdNotFoundException(appUserId);
 		}

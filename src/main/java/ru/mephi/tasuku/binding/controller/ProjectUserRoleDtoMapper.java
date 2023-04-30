@@ -3,7 +3,6 @@ package ru.mephi.tasuku.binding.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.mephi.tasuku.appuser.service.AppUserService;
-import ru.mephi.tasuku.appuser.service.object.AppUser;
 import ru.mephi.tasuku.binding.controller.dto.ProjectMemberRequest;
 import ru.mephi.tasuku.binding.controller.dto.ProjectMemberResponse;
 import ru.mephi.tasuku.binding.service.object.ProjectUserRole;
@@ -15,16 +14,15 @@ public class ProjectUserRoleDtoMapper {
 
 	public ProjectUserRole projectMemberRequestToObject(ProjectMemberRequest dto) {
 		return ProjectUserRole.builder()
-				.user(appUserService.getById(dto.getAppUserId()))
+				.appUser(appUserService.getById(dto.getAppUserId()))
 				.userRole(dto.getUserRole())
 				.build();
 	}
 
 	public ProjectMemberResponse objectToProjectMemberResponse(ProjectUserRole object){
-		AppUser appUser = object.getUser();
 		return ProjectMemberResponse.builder()
-				.appUserId(appUser.getId())
-				.username(appUser.getUsername())
+				.appUserId(object.getAppUser().getId())
+				.username(object.getAppUser().getUsername())
 				.userRole(object.getUserRole())
 				.build();
 	}
