@@ -17,7 +17,6 @@ import ru.mephi.tasuku.task.service.object.Task;
 @Component
 @RequiredArgsConstructor
 public class TaskDtoMapper {
-
     private final AppUserService appUserService;
     private final ProjectService projectService;
     private final AppUserDtoMapper appUserDtoMapper;
