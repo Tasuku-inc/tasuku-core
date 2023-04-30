@@ -6,8 +6,7 @@ import ru.mephi.tasuku.binding.repository.model.ProjectUserRolePk;
 
 import java.util.List;
 
-public interface ProjectUserRoleRepository extends
-		JpaRepository<ProjectUserRoleModel, ProjectUserRolePk> {
+public interface ProjectUserRoleRepository extends JpaRepository<ProjectUserRoleModel, ProjectUserRolePk> {
 
 	List<ProjectUserRoleModel> searchAllByPk_Project_IdAndPk_User_Id(long projectId, long userId);
 
