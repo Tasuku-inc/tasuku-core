@@ -11,6 +11,4 @@ public class ProjectCreateRequest {
     private String name;
     @NotNull(message = "HeadUserId can't be null")
     private Long headUserId;
-    @NotNull(message = "Project status can't be null")
-    private Boolean closed;
 }

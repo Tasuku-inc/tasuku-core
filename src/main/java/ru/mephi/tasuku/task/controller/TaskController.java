@@ -1,10 +1,18 @@
 package ru.mephi.tasuku.task.controller;
 
+import java.util.List;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.mephi.tasuku.task.controller.dto.TaskCreateRequest;
 import ru.mephi.tasuku.task.controller.dto.TaskResponse;
 import ru.mephi.tasuku.task.controller.dto.TaskUpdateRequest;
@@ -39,5 +47,12 @@ public class TaskController {
 	@DeleteMapping("delete/{taskId}")
 	public void deleteTask(@PathVariable long taskId) {
 		taskService.deleteTask(taskId);
+	}
+
+	@GetMapping("/{projectId}")
+	public List<TaskResponse> getAllByProjectId(@PathVariable long projectId) {
+		return taskService.getAllByProjectId(projectId).stream()
+				.map(taskDtoMapper::objectToDto)
+				.toList();
 	}
 }

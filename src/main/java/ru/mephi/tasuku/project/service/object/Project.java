@@ -16,9 +16,13 @@ import ru.mephi.tasuku.task.service.object.Task;
 public class Project {
     private long id;
     private String name;
-    private boolean closed;
+    private Boolean closed;
     private AppUser headUser;
     private List<ProjectUserRole> projectUserRoles;
     private List<Task> tasks;
     private List<Sprint> sprints;
+
+    public Boolean isClosed() {
+        return closed;
+    }
 }
