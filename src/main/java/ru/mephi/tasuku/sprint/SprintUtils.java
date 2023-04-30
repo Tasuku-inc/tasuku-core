@@ -6,11 +6,13 @@ import java.util.List;
 import ru.mephi.tasuku.sprint.service.object.Sprint;
 
 public class SprintUtils {
+    private static final int COUNT_OF_DAYS_PER_WEEK = 7;
+    private static final int ONE_DAY = 1;
 
     public static Sprint getActual() {
         LocalDate now = LocalDate.now();
-        LocalDate fromDate = now.minusDays(now.getDayOfWeek().getValue() - 1);
-        LocalDate toDate = now.plusDays(7 - now.getDayOfWeek().getValue());
+        LocalDate fromDate = now.minusDays(now.getDayOfWeek().getValue() - ONE_DAY);
+        LocalDate toDate = now.plusDays(COUNT_OF_DAYS_PER_WEEK - now.getDayOfWeek().getValue());
         return Sprint.builder()
                 .fromDate(fromDate)
                 .toDate(toDate)
