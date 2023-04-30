@@ -5,6 +5,6 @@ import ru.mephi.tasuku.appuser.repository.model.SystemRole;
 
 @Data
 public class SystemRoleRequest {
-	private long id;
+	private long appUserId;
 	private SystemRole systemRole;
 }
