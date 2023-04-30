@@ -15,8 +15,6 @@ import ru.mephi.tasuku.task.repository.model.TaskModel;
 
 import java.util.List;
 
-@Entity
-@Table(name = "project")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -32,6 +30,8 @@ import java.util.List;
         "tasks",
         "sprints"
 })
+@Entity
+@Table(name = "project")
 public class ProjectModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

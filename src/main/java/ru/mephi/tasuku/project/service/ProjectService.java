@@ -5,21 +5,19 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.mephi.tasuku.appuser.service.object.AppUser;
 import ru.mephi.tasuku.project.repository.ProjectRepository;
 import ru.mephi.tasuku.project.repository.model.ProjectModel;
 import ru.mephi.tasuku.project.service.exception.ProjectByIdNotFoundException;
 import ru.mephi.tasuku.project.service.exception.ProjectNameExistsException;
 import ru.mephi.tasuku.project.service.object.Project;
 import ru.mephi.tasuku.sprint.SprintUtils;
-import ru.mephi.tasuku.task.service.TaskService;
-import ru.mephi.tasuku.task.service.object.Task;
 
 @Service
 @RequiredArgsConstructor
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
-    private final TaskService taskService;
 
     public Project getById(long id) {
         ProjectModel model = projectRepository.findById(id)
@@ -33,10 +31,6 @@ public class ProjectService {
                 .toList();
     }
 
-    public List<Task> getTasks(long projectId) {
-        return taskService.getAllByProjectId(projectId);
-    }
-
     @Transactional
     public long createProject(Project project) {
         if (isProjectNameOccupied(project.getName())) {
@@ -48,18 +42,24 @@ public class ProjectService {
     }
 
     @Transactional
-    public void updateProject(long projectId, Project updatedProject) {
-        Project currentProject = this.getById(projectId);
-
-        String currentName = currentProject.getName();
-        String updatedName = updatedProject.getName();
-
-        if (!currentName.equals(updatedName)
-                && isProjectNameOccupied(updatedName)) {
-            throw new ProjectNameExistsException(updatedName);
+    public void updateProject(Project updatedProject) {
+        Project project = getById(updatedProject.getId());
+        String newName = updatedProject.getName();
+        if (newName != null) {
+            if (isProjectNameOccupied(newName)) {
+                throw new ProjectNameExistsException(newName);
+            }
+            project.setName(newName);
         }
-
-        ProjectModel model = ProjectModelMapper.objectToModel(updatedProject);
+        Boolean newClosed = updatedProject.isClosed();
+        if (newClosed != null) {
+            project.setClosed(newClosed);
+        }
+        AppUser newHeadUser = updatedProject.getHeadUser();
+        if (newHeadUser != null) {
+            project.setHeadUser(newHeadUser);
+        }
+        ProjectModel model = ProjectModelMapper.objectToModel(project);
         projectRepository.save(model);
     }
 

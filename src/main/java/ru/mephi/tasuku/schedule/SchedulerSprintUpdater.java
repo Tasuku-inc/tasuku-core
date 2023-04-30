@@ -38,7 +38,7 @@ public class SchedulerSprintUpdater {
             processing(tasks, lastSprint, actualSprint);
 
             tasks.forEach(taskService::updateTask);
-            projectService.updateProject(project.getId(), project);
+            projectService.updateProject(project);
         }
 
         log.info("Schedule task for sprint finished!");
