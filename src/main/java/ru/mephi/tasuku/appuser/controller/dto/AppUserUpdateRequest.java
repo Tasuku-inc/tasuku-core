@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class AppUserUpdateRequest {
+	private long id;
 	private String username;
 	@Email(message = "Invalid email form")
 	private String email;

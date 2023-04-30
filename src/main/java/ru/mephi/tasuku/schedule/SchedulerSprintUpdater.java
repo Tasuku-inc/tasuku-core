@@ -33,11 +33,11 @@ public class SchedulerSprintUpdater {
             Sprint actualSprint = SprintUtils.getActual();
             sprints.add(actualSprint);
 
-            List<Task> tasks = taskService.findAllInProject(project.getId());
+            List<Task> tasks = taskService.getAllByProjectId(project.getId());
 
             processing(tasks, lastSprint, actualSprint);
 
-            tasks.forEach(task -> taskService.updateTask(task.getId(), task));
+            tasks.forEach(taskService::updateTask);
             projectService.updateProject(project.getId(), project);
         }
 

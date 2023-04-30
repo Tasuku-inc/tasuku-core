@@ -12,7 +12,7 @@ import ru.mephi.tasuku.task.repository.model.TaskStatus;
 @Builder
 @ToString
 public class Task {
-	private long id;
+	private Long id;
 	private String name;
 	private AppUser reporter;
 	private AppUser assignee;

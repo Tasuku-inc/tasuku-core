@@ -9,7 +9,7 @@ import ru.mephi.tasuku.project.controller.dto.ProjectCreateRequest;
 import ru.mephi.tasuku.project.controller.dto.ProjectResponse;
 import ru.mephi.tasuku.project.controller.dto.ProjectUpdateRequest;
 import ru.mephi.tasuku.project.service.ProjectService;
-import ru.mephi.tasuku.task.controller.dto.TaskDtoMapper;
+import ru.mephi.tasuku.task.controller.TaskDtoMapper;
 import ru.mephi.tasuku.task.controller.dto.TaskResponse;
 
 @RestController

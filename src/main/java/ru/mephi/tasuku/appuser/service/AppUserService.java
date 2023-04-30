@@ -1,19 +1,18 @@
 package ru.mephi.tasuku.appuser.service;
 
+import java.util.List;
+
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.mephi.tasuku.appuser.repository.AppUserRepository;
 import ru.mephi.tasuku.appuser.repository.model.AppUserModel;
 import ru.mephi.tasuku.appuser.repository.model.SystemRole;
 import ru.mephi.tasuku.appuser.service.exception.AppUserByIdNotFoundException;
+import ru.mephi.tasuku.appuser.service.exception.AppUserByUsernameNotFoundException;
 import ru.mephi.tasuku.appuser.service.exception.AppUserEmailExistsException;
 import ru.mephi.tasuku.appuser.service.exception.AppUserUsernameExistsException;
 import ru.mephi.tasuku.appuser.service.object.AppUser;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +21,7 @@ public class AppUserService {
 
     public AppUser getByUsername(String username) {
         AppUserModel appUserModel = appUserRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException(username));
+                .orElseThrow(() -> new AppUserByUsernameNotFoundException(username));
         return AppUserModelMapper.modelToObject(appUserModel);
     }
 
@@ -32,47 +31,47 @@ public class AppUserService {
         return AppUserModelMapper.modelToObject(appUserModel);
     }
 
-	public List<AppUser> getAll() {
+    public List<AppUser> getAll() {
         return appUserRepository.findAll().stream()
-                .map(AppUserModelMapper::modelToObject).toList();
-	}
+                .map(AppUserModelMapper::modelToObject)
+                .toList();
+    }
 
     @Transactional
     public long create(AppUser appUser) {
-        if (isUsernameOccupied(appUser.getUsername())) {
+        if (isUsernameExists(appUser.getUsername())) {
             throw new AppUserUsernameExistsException(appUser.getUsername());
         }
-        if (isEmailOccupied(appUser.getEmail())) {
+        if (isEmailExists(appUser.getEmail())) {
             throw new AppUserEmailExistsException(appUser.getEmail());
         }
-
         AppUserModel appUserModel = AppUserModelMapper.objectToModel(appUser);
         return appUserRepository.save(appUserModel).getId();
     }
 
     @Transactional
-    public void update(long appUserId, AppUser updatedAppUser) {
-        AppUser oldAppUser = this.getById(appUserId);
-
-        String oldUsername = oldAppUser.getUsername();
-        String updatedUsername = updatedAppUser.getUsername();
-
-        if (!oldUsername.equals(updatedUsername)
-                && isUsernameOccupied(updatedUsername)) {
-            throw new AppUserUsernameExistsException(updatedUsername);
+    public void update(AppUser updatedAppUser) {
+        AppUser appUser = getById(updatedAppUser.getId());
+        String newUsername = updatedAppUser.getUsername();
+        if (newUsername != null) {
+            if (isUsernameExists(newUsername)) {
+                throw new AppUserUsernameExistsException(newUsername);
+            }
+            appUser.setUsername(newUsername);
         }
-
-        String oldEmail = oldAppUser.getEmail();
-        String updatedEmail = updatedAppUser.getEmail();
-
-        if (!oldEmail.equals(updatedEmail)
-                && isEmailOccupied(updatedEmail)) {
-            throw new AppUserEmailExistsException(updatedEmail);
+        String newEmail = updatedAppUser.getEmail();
+        if (newEmail != null) {
+            if (isEmailExists(newEmail)) {
+                throw new AppUserEmailExistsException(newEmail);
+            }
+            appUser.setEmail(newEmail);
         }
-
-        appUserRepository.save(
-                AppUserModelMapper.objectToModel(updatedAppUser)
-        );
+        String newPassword = updatedAppUser.getPassword();
+        if (newPassword != null) {
+            appUser.setPassword(newPassword);
+        }
+        AppUserModel model = AppUserModelMapper.objectToModel(appUser);
+        appUserRepository.save(model);
     }
 
     @Transactional
@@ -85,18 +84,19 @@ public class AppUserService {
 
     @Transactional
     public void updateSystemRole(long appUserId, SystemRole systemRole) {
-        AppUser appUser = this.getById(appUserId);
-        appUser.setSystemRole(systemRole);
-        appUserRepository.save(
-                AppUserModelMapper.objectToModel(appUser)
-        );
+        AppUser appUser = getById(appUserId);
+        if (systemRole != null) {
+            appUser.setSystemRole(systemRole);
+        }
+        AppUserModel model = AppUserModelMapper.objectToModel(appUser);
+        appUserRepository.save(model);
     }
 
-    private boolean isUsernameOccupied(String username) {
+    private boolean isUsernameExists(String username) {
         return appUserRepository.findByUsername(username).isPresent();
     }
 
-    private boolean isEmailOccupied(String email) {
+    private boolean isEmailExists(String email) {
         return appUserRepository.findByEmail(email).isPresent();
     }
 }

@@ -2,9 +2,7 @@ package ru.mephi.tasuku.task.controller.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 
 @Data
 public class TaskCreateRequest {
@@ -14,7 +12,6 @@ public class TaskCreateRequest {
 	private Long assigneeId;
 	@NotNull(message = "ProjectId can't be null")
 	private Long projectId;
-	private Long sprintId;
 	@NotNull(message = "Description can't be null")
 	private String description;
 }

@@ -6,13 +6,13 @@ import ru.mephi.tasuku.project.repository.model.ProjectModel;
 import ru.mephi.tasuku.sprint.repository.model.SprintModel;
 import jakarta.persistence.*;
 
-@Entity
-@Table (name = "task")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Entity
+@Table (name = "task")
 public class TaskModel {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)

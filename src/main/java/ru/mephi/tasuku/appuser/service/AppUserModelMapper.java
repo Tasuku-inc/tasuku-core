@@ -1,20 +1,10 @@
 package ru.mephi.tasuku.appuser.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
 import ru.mephi.tasuku.appuser.repository.model.AppUserModel;
 import ru.mephi.tasuku.appuser.service.object.AppUser;
-import ru.mephi.tasuku.binding.service.ProjectUserRoleModelMapper;
-import ru.mephi.tasuku.project.repository.model.ProjectModel;
-import ru.mephi.tasuku.project.service.object.Project;
-import ru.mephi.tasuku.task.service.TaskModelMapper;
 
-@Component
-@RequiredArgsConstructor
 public class AppUserModelMapper {
 
     public static AppUser modelToObject(AppUserModel model) {
@@ -42,5 +32,4 @@ public class AppUserModelMapper {
                 .reportingTasks(List.of())
                 .build();
     }
-
 }
