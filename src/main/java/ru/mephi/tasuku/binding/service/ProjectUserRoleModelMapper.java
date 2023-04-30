@@ -11,7 +11,7 @@ public class ProjectUserRoleModelMapper {
     public static ProjectUserRole modelToObject(ProjectUserRoleModel model) {
         return ProjectUserRole.builder()
                 .project(ProjectModelMapper.modelToObject(model.getPk().getProject()))
-                .user(AppUserModelMapper.modelToObject(model.getPk().getUser()))
+                .appUser(AppUserModelMapper.modelToObject(model.getPk().getAppUser()))
                 .userRole(model.getUserRole())
                 .build();
     }
@@ -19,7 +19,7 @@ public class ProjectUserRoleModelMapper {
     public static ProjectUserRoleModel objectToModel(ProjectUserRole object) {
         return ProjectUserRoleModel.builder()
                 .pk(ProjectUserRolePk.builder()
-                        .user(AppUserModelMapper.objectToModel(object.getUser()))
+                        .appUser(AppUserModelMapper.objectToModel(object.getAppUser()))
                         .project(ProjectModelMapper.objectToModel(object.getProject()))
                         .build()
                 )

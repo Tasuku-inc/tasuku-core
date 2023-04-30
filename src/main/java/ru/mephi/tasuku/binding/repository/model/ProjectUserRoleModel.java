@@ -11,7 +11,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.mephi.tasuku.appuser.repository.model.UserRole;
 
 @Entity
 @Table(name = "project_user_role")

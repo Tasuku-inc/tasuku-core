@@ -1,4 +1,4 @@
-package ru.mephi.tasuku.appuser.repository.model;
+package ru.mephi.tasuku.binding.repository.model;
 
 public enum UserRole {
 	DEVELOPER,

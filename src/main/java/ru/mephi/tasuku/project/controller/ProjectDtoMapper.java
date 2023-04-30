@@ -3,9 +3,9 @@ package ru.mephi.tasuku.project.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.mephi.tasuku.appuser.service.AppUserService;
-import ru.mephi.tasuku.project.controller.dto.ProjectCreateRequest;
-import ru.mephi.tasuku.project.controller.dto.ProjectResponse;
-import ru.mephi.tasuku.project.controller.dto.ProjectUpdateRequest;
+import ru.mephi.tasuku.appuser.service.object.AppUser;
+import ru.mephi.tasuku.binding.service.object.ProjectUserRole;
+import ru.mephi.tasuku.project.controller.dto.*;
 import ru.mephi.tasuku.project.service.object.Project;
 
 @Component

@@ -60,6 +60,6 @@ public class AppUserController {
 	@PostMapping("/update-system-role")
 	@PreAuthorize("hasRole('ADMIN')")
 	public void updateSystemRole(@RequestBody SystemRoleRequest dto) {
-		appUserService.updateSystemRole(dto.getId(), SystemRoleDtoMapper.dtoToObject(dto));
+		appUserService.updateSystemRole(dto.getAppUserId(), SystemRoleDtoMapper.dtoToObject(dto));
 	}
 }

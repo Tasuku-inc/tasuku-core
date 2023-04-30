@@ -21,5 +21,5 @@ public class ProjectUserRolePk implements Serializable {
 	private ProjectModel project;
 	@ManyToOne
 	@JoinColumn(name="user_id")
-	private AppUserModel user;
+	private AppUserModel appUser;
 }

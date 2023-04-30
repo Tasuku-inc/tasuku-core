@@ -6,6 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.mephi.tasuku.appuser.service.object.AppUser;
+import ru.mephi.tasuku.binding.controller.dto.ProjectMemberRequest;
+import ru.mephi.tasuku.binding.service.ProjectUserRoleService;
+import ru.mephi.tasuku.binding.service.object.ProjectUserRole;
 import ru.mephi.tasuku.project.repository.ProjectRepository;
 import ru.mephi.tasuku.project.repository.model.ProjectModel;
 import ru.mephi.tasuku.project.service.exception.ProjectByIdNotFoundException;
@@ -18,6 +21,7 @@ import ru.mephi.tasuku.sprint.SprintUtils;
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
+    private final ProjectUserRoleService projectUserRoleService;
 
     public Project getById(long id) {
         ProjectModel model = projectRepository.findById(id)
@@ -68,6 +72,33 @@ public class ProjectService {
         ProjectModel model = projectRepository.findById(id)
                 .orElseThrow(() -> new ProjectByIdNotFoundException(id));
         projectRepository.delete(model);
+    }
+
+    public List<ProjectUserRole> getMembers(long projectId) {
+        if (projectRepository.existsById(projectId)) {
+            return projectUserRoleService.getAllByProjectId(projectId);
+        } else {
+            throw new ProjectByIdNotFoundException(projectId);
+        }
+    }
+
+    public void addMember(long projectId, ProjectUserRole projectUserRole) {
+        projectUserRole.setProject(getById(projectId));
+        projectUserRoleService.addMemberToProject(projectUserRole);
+    }
+
+    public void deleteMember(long projectId, long appUserId) {
+        if (projectRepository.existsById(projectId)) {
+            projectUserRoleService.deleteMember(projectId, appUserId);
+        } else {
+            throw new ProjectByIdNotFoundException(projectId);
+        }
+
+    }
+
+    public void updateMember(long projectId, ProjectUserRole projectUserRole) {
+        projectUserRole.setProject(getById(projectId));
+        projectUserRoleService.updateMember(projectUserRole);
     }
 
     public boolean isProjectNameOccupied(String name) {
