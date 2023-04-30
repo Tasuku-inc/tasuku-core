@@ -16,7 +16,7 @@ public class ProjectUserRoleService {
 	private final ProjectUserRoleRepository projectUserRoleRepository;
 
 	public boolean existsByProjectIdAndUserId(long projectId, long userId) {
-		return !projectUserRoleRepository.searchAllByProjectIdAndUserId(projectId, userId)
+		return !projectUserRoleRepository.searchAllByProjectIdAndAppUserId(projectId, userId)
 				.isEmpty();
 	}
 
@@ -30,7 +30,7 @@ public class ProjectUserRoleService {
 
 	public List<ProjectUserRole> getAllByAppUserId(long appUserId) {
 		List<ProjectUserRoleModel> models = projectUserRoleRepository
-				.findByPkUserId(appUserId);
+				.findByPkAppUserId(appUserId);
 		return models.stream()
 				.map(ProjectUserRoleModelMapper::modelToObject)
 				.toList();

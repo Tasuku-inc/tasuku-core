@@ -11,20 +11,20 @@ import java.util.List;
 
 public interface ProjectUserRoleRepository extends JpaRepository<ProjectUserRoleModel, ProjectUserRolePk> {
 
-	List<ProjectUserRoleModel> searchAllByPk_ProjectIdAndPk_UserId(long projectId, long userId);
+	List<ProjectUserRoleModel> searchAllByPk_ProjectIdAndPk_AppUserId(long projectId, long appUserId);
 
-	default List<ProjectUserRoleModel> searchAllByProjectIdAndUserId(long projectId, long userId) {
-		return searchAllByPk_ProjectIdAndPk_UserId(projectId, userId);
+	default List<ProjectUserRoleModel> searchAllByProjectIdAndAppUserId(long projectId, long appUserId) {
+		return searchAllByPk_ProjectIdAndPk_AppUserId(projectId, appUserId);
 	}
 
 	List<ProjectUserRoleModel> findByPkProjectId(long projectId);
 
-	List<ProjectUserRoleModel> findByPkUserId(long appUserId);
+	List<ProjectUserRoleModel> findByPkAppUserId(long appUserId);
 
 	@Modifying
 	@Query("""
 		delete from ProjectUserRoleModel pur
 			where pur.pk.project.id=:projectId
-			and pur.pk.user.id =:appUserId""")
+			and pur.pk.appUser.id =:appUserId""")
 	void deleteMember(@Param("projectId") long projectId, @Param("appUserId") long appUserId);
 }
