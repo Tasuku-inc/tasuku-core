@@ -32,6 +32,24 @@ public class TaskService {
                 .toList();
     }
 
+    public List<Task> getAllByAssigneeId(long appUserId) {
+        return taskRepository.findAllByAssigneeId(appUserId).stream()
+                .map(TaskModelMapper::modelToObject)
+                .toList();
+    }
+
+    public List<Task> getAllByReporterId(long appUserId) {
+        return taskRepository.findAllByReporterId(appUserId).stream()
+                .map(TaskModelMapper::modelToObject)
+                .toList();
+    }
+
+    public List<Task> getAllBySprintId(long sprintId) {
+        return taskRepository.findAllBySprintId(sprintId).stream()
+                .map(TaskModelMapper::modelToObject)
+                .toList();
+    }
+
     @Transactional
     public long createTask(Task task) {
         if (isNameExists(task.getName())) {
@@ -40,6 +58,7 @@ public class TaskService {
         AppUser reporter = UserConditionEvaluator.getAuthAppUser();
         task.setReporter(reporter);
         task.setStatus(TaskStatus.OPENED);
+
         task.setSprint(SprintUtils.getActual());
         TaskModel taskModel = TaskModelMapper.objectToModel(task);
         return taskRepository.save(taskModel).getId();
