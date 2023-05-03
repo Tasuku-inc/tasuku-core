@@ -14,7 +14,7 @@ import ru.mephi.tasuku.task.service.object.Task;
 @Builder
 @ToString
 public class Project {
-    private long id;
+    private Long id;
     private String name;
     private Boolean closed;
     private AppUser headUser;

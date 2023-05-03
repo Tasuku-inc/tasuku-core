@@ -17,10 +17,7 @@ public class ProjectModelMapper {
                 .headUser(AppUserModelMapper.modelToObject(model.getHeadUser()))
                 .projectUserRoles(List.of())
                 .tasks(List.of())
-                .sprints(model.getSprints().stream()
-                        .map(SprintModelMapper::modelToObject)
-                        .toList()
-                )
+                .sprints(List.of())
                 .build();
     }
 
@@ -32,11 +29,7 @@ public class ProjectModelMapper {
                 .headUser(AppUserModelMapper.objectToModel(object.getHeadUser()))
                 .projectUserRoles(List.of())
                 .tasks(List.of())
-                .sprints(object.getSprints().stream()
-                        .map(SprintModelMapper::objectToModel)
-                        .toList()
-                )
+                .sprints(List.of())
                 .build();
     }
-
 }

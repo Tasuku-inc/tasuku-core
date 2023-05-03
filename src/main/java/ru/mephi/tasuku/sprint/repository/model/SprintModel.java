@@ -36,7 +36,7 @@ public class SprintModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "sprint_id")
-	private long id;
+	private Long id;
 	@Column
 	private LocalDate fromDate;
 	@Column

@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import ru.mephi.tasuku.project.service.ProjectService;
 import ru.mephi.tasuku.project.service.object.Project;
 import ru.mephi.tasuku.sprint.SprintUtils;
+import ru.mephi.tasuku.sprint.service.SprintService;
 import ru.mephi.tasuku.sprint.service.object.Sprint;
 import ru.mephi.tasuku.task.repository.model.TaskStatus;
 import ru.mephi.tasuku.task.service.TaskService;
@@ -20,6 +21,7 @@ import ru.mephi.tasuku.task.service.object.Task;
 public class SchedulerSprintUpdater {
 
     private final ProjectService projectService;
+    private final SprintService sprintService;
     private final TaskService taskService;
 
     @Scheduled(cron = "@weekly")
@@ -28,14 +30,12 @@ public class SchedulerSprintUpdater {
         List<Project> projects = projectService.getAll();
 
         for (Project project : projects) {
-            List<Sprint> sprints = project.getSprints();
-            Sprint lastSprint = SprintUtils.getLast(sprints);
-            Sprint actualSprint = SprintUtils.getActual();
-            sprints.add(actualSprint);
+            Sprint previousSprint = sprintService.getActualByProjectId(project.getId());
+            Sprint actualSprint = sprintService.createActualSprintInProject(project);
 
             List<Task> tasks = taskService.getAllByProjectId(project.getId());
 
-            processing(tasks, lastSprint, actualSprint);
+            processing(tasks, previousSprint, actualSprint);
 
             tasks.forEach(taskService::updateTask);
             projectService.updateProject(project);
@@ -51,5 +51,6 @@ public class SchedulerSprintUpdater {
                 .toList();
         lastSprint.getTasks().removeAll(openTasks);
         actualSprint.setTasks(openTasks);
+        sprintService.update(actualSprint);
     }
 }

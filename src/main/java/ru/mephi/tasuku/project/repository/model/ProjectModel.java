@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 import ru.mephi.tasuku.appuser.repository.model.AppUserModel;
 import ru.mephi.tasuku.binding.repository.model.ProjectUserRoleModel;
 import jakarta.persistence.*;
@@ -36,7 +37,7 @@ public class ProjectModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "project_id")
-    private long id;
+    private Long id;
     @Column
     private String name;
     @ManyToOne

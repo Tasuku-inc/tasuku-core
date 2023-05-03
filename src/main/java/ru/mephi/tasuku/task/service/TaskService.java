@@ -4,8 +4,10 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.mephi.tasuku.appuser.service.object.AppUser;
+import ru.mephi.tasuku.project.service.object.Project;
 import ru.mephi.tasuku.security.UserConditionEvaluator;
 import ru.mephi.tasuku.sprint.SprintUtils;
+import ru.mephi.tasuku.sprint.service.SprintService;
 import ru.mephi.tasuku.task.repository.TaskRepository;
 import ru.mephi.tasuku.task.repository.model.TaskModel;
 import ru.mephi.tasuku.task.repository.model.TaskStatus;
@@ -19,6 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TaskService {
     private final TaskRepository taskRepository;
+    private final SprintService sprintService;
 
     public Task getById(long taskId) {
         TaskModel taskModel = taskRepository.findById(taskId)
@@ -59,7 +62,7 @@ public class TaskService {
         task.setReporter(reporter);
         task.setStatus(TaskStatus.OPENED);
 
-        task.setSprint(SprintUtils.getActual());
+        task.setSprint(sprintService.getActualByProjectId(task.getProject().getId()));
         TaskModel taskModel = TaskModelMapper.objectToModel(task);
         return taskRepository.save(taskModel).getId();
     }
