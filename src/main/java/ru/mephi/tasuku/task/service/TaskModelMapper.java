@@ -23,7 +23,6 @@ public class TaskModelMapper {
 
     public static TaskModel objectToModel(Task object) {
         return TaskModel.builder()
-                .id(object.getId())
                 .name(object.getName())
                 .reporter(AppUserModelMapper.objectToModel(object.getReporter()))
                 .assignee(AppUserModelMapper.objectToModel(object.getAssignee()))

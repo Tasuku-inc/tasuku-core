@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.mephi.tasuku.security.UserConditionEvaluator;
 import ru.mephi.tasuku.task.controller.dto.TaskCreateRequest;
 import ru.mephi.tasuku.task.controller.dto.TaskResponse;
 import ru.mephi.tasuku.task.controller.dto.TaskUpdateRequest;
@@ -44,14 +45,35 @@ public class TaskController {
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
-	@DeleteMapping("delete/{taskId}")
+	@DeleteMapping("/delete/{taskId}")
 	public void deleteTask(@PathVariable long taskId) {
 		taskService.deleteTask(taskId);
 	}
 
-	@GetMapping("/{projectId}")
+	@GetMapping("/all-by-project-id/{projectId}")
 	public List<TaskResponse> getAllByProjectId(@PathVariable long projectId) {
 		return taskService.getAllByProjectId(projectId).stream()
+				.map(taskDtoMapper::objectToDto)
+				.toList();
+	}
+
+	@GetMapping("/all-by-assignee-id/{appUserId}")
+	public List<TaskResponse> getAllByAssigneeId(@PathVariable long appUserId) {
+		return taskService.getAllByAssigneeId(appUserId).stream()
+				.map(taskDtoMapper::objectToDto)
+				.toList();
+	}
+
+	@GetMapping("/all-by-reporter-id/{appUserId}")
+	public List<TaskResponse> getAllByReporterId(@PathVariable long appUserId) {
+		return taskService.getAllByReporterId(appUserId).stream()
+				.map(taskDtoMapper::objectToDto)
+				.toList();
+	}
+
+	@GetMapping("/all-by-sprint-id/{sprintId}")
+	public List<TaskResponse> getAllBySprintId(@PathVariable long sprintId) {
+		return taskService.getAllBySprintId(sprintId).stream()
 				.map(taskDtoMapper::objectToDto)
 				.toList();
 	}
