@@ -13,7 +13,7 @@ import ru.mephi.tasuku.task.service.object.Task;
 @Builder
 @ToString
 public class Sprint {
-	private long id;
+	private Long id;
 	private LocalDate fromDate;
 	private LocalDate toDate;
 	private Project project;

@@ -15,6 +15,7 @@ import ru.mephi.tasuku.project.service.exception.ProjectByIdNotFoundException;
 import ru.mephi.tasuku.project.service.exception.ProjectNameExistsException;
 import ru.mephi.tasuku.project.service.object.Project;
 import ru.mephi.tasuku.sprint.SprintUtils;
+import ru.mephi.tasuku.sprint.service.SprintService;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +23,7 @@ public class ProjectService {
 
     private final ProjectRepository projectRepository;
     private final ProjectUserRoleService projectUserRoleService;
+    private final SprintService sprintService;
 
     public Project getById(long id) {
         ProjectModel model = projectRepository.findById(id)
@@ -40,9 +42,13 @@ public class ProjectService {
         if (isProjectNameOccupied(project.getName())) {
             throw new ProjectNameExistsException(project.getName());
         }
-        project.setSprints(List.of(SprintUtils.getActual()));
+
         ProjectModel model = ProjectModelMapper.objectToModel(project);
-        return projectRepository.save(model).getId();
+        long projectId = projectRepository.save(model).getId();
+
+        project.setId(projectId);
+        sprintService.createActualSprintInProject(project);
+        return projectId;
     }
 
     @Transactional

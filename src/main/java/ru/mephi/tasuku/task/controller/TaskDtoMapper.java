@@ -40,7 +40,6 @@ public class TaskDtoMapper {
                 .assignee(appUserService.getById(dto.getAssigneeId()))
                 .status(TaskStatus.OPENED)
                 .description(dto.getDescription())
-                .sprint(SprintUtils.getActual())
                 .project(projectService.getById(dto.getProjectId()))
                 .build();
     }
